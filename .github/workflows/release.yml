@@ -23,8 +23,12 @@ jobs:
       # 这两个变量由 @electron/get 与 electron-builder 直接读取，优先级高于 npm 配置。
       ELECTRON_MIRROR: https://github.com/electron/electron/releases/download/
       ELECTRON_BUILDER_BINARIES_MIRROR: https://github.com/electron-userland/electron-builder-binaries/releases/download/
-      # 把 npm 缓存放到 Runner 的临时目录（项目 .npmrc 里指向项目内的相对路径，那套规则是给本机沙箱用的）
-      npm_config_cache: ${{ runner.temp }}/npm-cache
+      #
+      # ⚠ 这里刻意**不**设置 npm 缓存目录。
+      #   项目 .npmrc 里有 `cache=./.npm-cache`，在 CI 上只会在工作区建一个目录，
+      #   无害。而 `${{ runner.temp }}` 这个上下文在 job 级 env 里**不可用** ——
+      #   写上去会让整个工作流在解析阶段就失败，表现为"跑了 0 秒、一个 job 都没有"。
+      #   （这个坑实际踩过：v1.0.0 第一次推送时两次运行都是 0 秒失败。）
 
     steps:
       - name: 检出代码
