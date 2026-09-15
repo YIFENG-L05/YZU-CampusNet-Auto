@@ -1,0 +1,79 @@
+name: Build and Release
+
+# 触发方式：
+#   1) 推送 v*.*.* 形式的 tag（如 v1.0.0）→ 构建 + 自动创建 Release 并上传安装包
+#   2) 手动触发（Actions 页面点 Run workflow）→ 只构建，产出为 Artifact，不发 Release
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      # 覆盖项目 .npmrc 里的国内镜像。
+      # 原因：.npmrc 配 npmmirror 是为了本机（校园网）下载稳定；
+      # GitHub Runner 本身就在 GitHub 网络上，直连官方源更快、少一跳。
+      # 这两个变量由 @electron/get 与 electron-builder 直接读取，优先级高于 npm 配置。
+      ELECTRON_MIRROR: https://github.com/electron/electron/releases/download/
+      ELECTRON_BUILDER_BINARIES_MIRROR: https://github.com/electron-userland/electron-builder-binaries/releases/download/
+      # 把 npm 缓存放到 Runner 的临时目录（项目 .npmrc 里指向项目内的相对路径，那套规则是给本机沙箱用的）
+      npm_config_cache: ${{ runner.temp }}/npm-cache
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # 用 npm ci 而不是 npm install：严格按 package-lock.json 安装，构建可复现
+      - name: 安装依赖
+        run: npm ci --no-audit --no-fund
+
+      # 全部离线测试，不接触真实校园网，不需要任何账号或密钥
+      - name: 运行测试
+        run: npm test
+
+      - name: 构建 Windows 安装包
+        run: npm run build
+
+      - name: 生成校验和
+        shell: pwsh
+        run: |
+          Get-ChildItem dist\*.exe | ForEach-Object {
+            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
+            "$hash  $($_.Name)" | Out-File -Append -Encoding utf8 dist\SHA256SUMS.txt
+            Write-Host "$($_.Name)  $hash"
+          }
+          Get-Content dist\SHA256SUMS.txt
+
+      - name: 上传构建产物（手动触发时可在此下载）
+        uses: actions/upload-artifact@v4
+        with:
+          name: YZU-CampusNet-Auto-Setup
+          path: |
+            dist/*.exe
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
+
+      # 只有推送 tag 时才发 Release。
+      # 刻意不上传源码压缩包、node_modules、日志或任何本地配置。
+      - name: 创建 Release 并上传安装包
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.exe
+            dist/SHA256SUMS.txt
+          generate_release_notes: true
+          draft: false
+          prerelease: false

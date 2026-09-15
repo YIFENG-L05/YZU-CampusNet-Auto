@@ -1,0 +1,79 @@
+{
+  "name": "campus-net-auto",
+  "productName": "YZU校园网自动登录助手",
+  "version": "1.0.0",
+  "description": "扬州大学校园网自动登录与自动重连助手（Windows 桌面应用）",
+  "private": false,
+  "license": "MIT",
+  "author": "YZU-CampusNet-Auto",
+  "main": "src/main/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron .",
+    "start:hidden": "electron . --hidden",
+    "icon": "node tools/make-icon.js",
+    "build": "electron-builder --win --x64",
+    "build:dir": "electron-builder --win --x64 --dir",
+    "test": "node tools/devtest/module-load-tests.js && node tools/devtest/unit-tests.js && node tools/devtest/phase1-tests.js && node tools/devtest/system-info-tests.js && node tools/devtest/find-portal-url-tests.js && node tools/devtest/config-store-tests.js && node tools/devtest/auto-connect-tests.js && node tools/devtest/eportal-http-tests.js && node tools/devtest/eportal-http-post-tests.js && node tools/devtest/service-api-tests.js && node tools/devtest/uninstall-tests.js",
+    "test:electron": "electron tools/devtest/electron-config-test.js",
+    "test:persist": "electron tools/devtest/electron-config-persist-test.js --phase save && electron tools/devtest/electron-config-persist-test.js --phase load",
+    "test:phase4": "electron tools/devtest/phase4-checks.js",
+    "smoke": "electron . --smoke-out .cache/ui-shots/main.png",
+    "smoke:hidden": "electron . --hidden --smoke-out .cache/ui-shots/hidden.png",
+    "smoke:close": "electron . --smoke-close-test --smoke-out .cache/ui-shots/close.png",
+    "smoke:login": "electron tools/devtest/electron-smoke.js",
+    "seed:demo": "electron tools/devtest/seed-demo-config.js",
+    "probe": "node tools/portal-probe.js",
+    "probe:watch": "node tools/portal-probe.js --watch",
+    "deep": "electron tools/portal-probe-deep.js",
+    "find-portal": "node tools/find-portal-url.js",
+    "cas-probe": "node tools/cas-probe.js",
+    "mock": "node tools/mock-portal-server.js",
+    "phase1": "electron tools/phase1-login.js",
+    "regression": "powershell -File tools/devtest/run-regression.ps1"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.campusnetauto.yzu",
+    "productName": "YZU校园网自动登录助手",
+    "copyright": "Copyright © 2026 YZU-CampusNet-Auto",
+    "directories": {
+      "output": "dist",
+      "buildResources": "."
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!**/*.map"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "executableName": "CampusNetAuto",
+      "artifactName": "YZU-CampusNet-Auto-Setup-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "YZU校园网自动登录助手",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "include": "build/installer.nsh"
+    }
+  }
+}

@@ -1,0 +1,236 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1f2329;
+  --muted: #6b7280;
+  --border: #e3e6ea;
+  --primary: #2b6cb0;
+  --primary-hover: #24598f;
+  --ok: #22a06b;
+  --warn: #d98b0b;
+  --off: #9aa4b2;
+  --err: #c0392b;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+.view { padding: 22px 24px 28px; }
+.hidden { display: none !important; }
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+/* ---------------- 表单 ---------------- */
+
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(43, 108, 176, .12);
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* 提示通常是"需要用户处理时才有内容"，空着的时候不要占位 */
+.hint:empty { display: none; }
+
+/* ---------------- 按钮 ---------------- */
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  padding: 9px 16px;
+  transition: background .12s, border-color .12s;
+}
+
+button:disabled { opacity: .55; cursor: default; }
+
+button.primary {
+  background: var(--primary);
+  color: #fff;
+  flex: 1;
+}
+button.primary:hover:not(:disabled) { background: var(--primary-hover); }
+
+button.secondary {
+  background: #fff;
+  color: var(--text);
+  border-color: var(--border);
+  flex: 1;
+}
+button.secondary:hover:not(:disabled) { border-color: #c9cfd6; }
+
+button.link {
+  background: none;
+  border: none;
+  color: var(--primary);
+  padding: 6px 0;
+  font-size: 13px;
+}
+button.link:hover { text-decoration: underline; }
+button.link.danger { color: var(--err); }
+
+button.danger-solid {
+  background: var(--err);
+  color: #fff;
+  flex: 1;
+}
+button.danger-solid:hover:not(:disabled) { background: #a63225; }
+
+.footer-actions {
+  display: flex;
+  gap: 18px;
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------- 状态 ---------------- */
+
+.status-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--off);
+  flex: 0 0 auto;
+}
+.dot.online { background: var(--ok); }
+.dot.portal { background: var(--warn); }
+.dot.nolink { background: var(--off); }
+.dot.error  { background: var(--err); }
+.dot.busy   { background: var(--primary); animation: pulse 1s infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+
+.status-detail {
+  margin-top: 7px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  min-height: 1em;
+  word-break: break-all;
+}
+
+/* ---------------- 信息列表 ---------------- */
+
+dl.info {
+  margin: 0 0 4px;
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  row-gap: 9px;
+  font-size: 13px;
+}
+dl.info dt { color: var(--muted); }
+dl.info dd { margin: 0; word-break: break-all; }
+
+/* ---------------- 复选框区 ---------------- */
+
+.checks {
+  margin: 18px 0 2px;
+  padding: 14px 0 4px;
+  border-top: 1px solid var(--border);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.check input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  margin: 0;
+}
+
+.checks .hint { margin: -4px 0 12px 23px; }
+
+/* ---------------- 结果框 ---------------- */
+
+.result {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.65;
+  border: 1px solid var(--border);
+  background: #fff;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.result.ok   { border-color: #bfe3d2; background: #f2fbf7; }
+.result.warn { border-color: #f0dcae; background: #fffbf2; }
+.result.err  { border-color: #efc9c3; background: #fdf4f3; }

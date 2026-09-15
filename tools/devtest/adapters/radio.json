@@ -1,0 +1,19 @@
+{
+  "id": "mock-radio",
+  "name": "模拟门户 · 运营商是 radio，无按钮，用 form.submit()",
+  "_devOnly": true,
+  "urlPatterns": ["127\\.0\\.0\\.1:18080"],
+  "readySelector": "#username",
+  "username": "#username",
+  "password": "#password",
+  "operator": {
+    "kind": "click",
+    "selector": "input[name=\"domain\"]",
+    "values": { "中国移动": "@cmcc", "中国联通": "@unicom", "中国电信": "@telecom" }
+  },
+  "loginButton": null,
+  "submitForm": "#loginForm",
+  "successTexts": ["认证成功"],
+  "errorTexts": ["密码错误", "账号或密码错误", "用户名不存在", "认证失败"],
+  "waitAfterSubmitMs": 4000
+}

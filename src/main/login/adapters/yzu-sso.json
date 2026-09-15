@@ -1,0 +1,70 @@
+{
+  "id": "yzu-sso",
+  "name": "扬州大学 统一身份认证（sso.yzu.edu.cn，CAS + ePortal）",
+  "_verified": "选择器来自 portal-probe-deep.js 对真实页面的渲染后采集，非猜测",
+  "_flow": [
+    "① 门户 http://10.245.2.19/eportal/index.jsp?wlanuserip=... (锐捷 ePortal，带 NAS 参数)",
+    "② 302 跳到 https://sso.yzu.edu.cn/login?service=... （表单在这里，Angular 动态渲染）",
+    "③ 认证成功回到门户，门户完成联网认证",
+    "④ 之后可能会弹出【选择网络服务】页（移动/联通/电信/校园网内网）—— 不是每次都出现",
+    "⑤ 最终 /eportal/success.jsp 会用 JS 跳转到 https://i.yzu.edu.cn"
+  ],
+  "urlPatterns": [
+    "sso\\.yzu\\.edu\\.cn",
+    "10\\.245\\.2\\.19/eportal"
+  ],
+  "readySelector": "input[name=\"username\"]:not([type=hidden])",
+  "readyTimeoutMs": 20000,
+  "username": "input[name=\"username\"]:not([type=hidden])",
+  "password": "input[type=\"password\"]",
+  "operator": {
+    "kind": "heuristic",
+    "selector": null,
+    "values": {},
+    "_note": "选择服务页只在认证成功后才出现，登录前拿不到它的 HTML，所以选择器无法事先获得。改为按运营商文字启发式识别：<select> 的 option 文字、或 radio/可点击项的文字。实测这种方式对 select 与 radio 两种形态都有效。"
+  },
+  "operatorLabels": ["中国移动", "中国联通", "中国电信", "校园网内网"],
+  "defaultOperator": "中国联通",
+  "loginButton": "button.login-button[type=\"submit\"]",
+  "submitForm": null,
+  "successTexts": [],
+  "errorTexts": [
+    "用户名或密码错误",
+    "密码错误",
+    "账号或密码错误",
+    "用户不存在",
+    "账号未激活",
+    "账号已被锁定",
+    "验证码",
+    "请输入验证码",
+    "请选择正确的网络服务"
+  ],
+  "waitAfterSubmitMs": 15000,
+  "_notes": [
+    "表单含 CAS 隐藏字段 execution（内含 JWT 令牌）与 _eventId=submit，必须原样提交。",
+    "这意味着不能用 HTTP 重放：必须先真实加载页面拿到当次有效的 execution 再提交。当前方案天然满足。",
+    "密码框没有 id 也没有 name，只能用 input[type=password] 定位；页面中只有一个密码框。",
+    "账号框的 name=username 在隐藏字段里也出现过，所以必须加 :not([type=hidden]) 才能选到可见的那个。",
+    "真实页面由 Angular 动态渲染：静态 HTML 里 input 数为 0，必须等渲染完成（轮询等待已覆盖）。",
+    "页面上存在 hidden 的 captcha_code 字段（当前为空、不可见，说明验证码已关闭）。注意很多 CAS 会在连续失败若干次后启用验证码，因此【密码错误后绝不无限重试】这条设计是必要的。",
+    "整个流程跨两个域：ePortal(10.245.2.19) 与 SSO(sso.yzu.edu.cn)；适配器只负责在承载表单的页面上填写提交，跳转由浏览器自动完成。",
+    "选择服务这一步标记为【可选】：门户会记住上次的选择，所以这个页面有时不出现。optional+group 保证不出现时整组跳过、登录照常完成。",
+    "successTexts 暂为空：成功路径上没有稳定的提示语（最终跳转到学校主页），因此成功与否完全以【互联网连通性恢复】这一最终判据为准。",
+    "errorTexts 目前是按常见文案列的，第一次真实登录后应按实际情况收窄。"
+  ],
+  "steps": [
+    { "action": "waitFor", "selector": "input[name=\"username\"]:not([type=hidden])", "timeoutMs": 20000 },
+    { "action": "fill" },
+    { "action": "sleep", "ms": 250 },
+    { "action": "submit", "selector": "button.login-button[type=\"submit\"]" },
+    {
+      "action": "selectService",
+      "labels": ["中国移动", "中国联通", "中国电信", "校园网内网"],
+      "confirmTexts": ["确认", "确定", "连接", "下一步", "提交", "登录"],
+      "timeoutMs": 12000,
+      "optional": true,
+      "group": "service"
+    },
+    { "action": "sleep", "ms": 1200 }
+  ]
+}

@@ -1,0 +1,86 @@
+﻿
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : FENG-L
+   Primary Dns Suffix  . . . . . . . : 
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+
+Ethernet adapter ��̫��:
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Realtek PCIe GbE Family Controller
+   Physical Address. . . . . . . . . : BC-EC-A0-03-7C-32
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2001:da8:100f:112:3d94:5b8c:3be7:d7c6(Preferred) 
+   Temporary IPv6 Address. . . . . . : 2001:da8:100f:112:20e3:7e90:5987:a8e(Deprecated) 
+   Temporary IPv6 Address. . . . . . : 2001:da8:100f:112:d871:5a18:d6ec:710(Deprecated) 
+   Link-local IPv6 Address . . . . . : fe80::b6b:3b4d:e7b2:ad14%10(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.130.130.78(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.128.0
+   Lease Obtained. . . . . . . . . . : 2026��9��14�� 18:58:10
+   Lease Expires . . . . . . . . . . : 2026��9��15�� 2:46:26
+   Default Gateway . . . . . . . . . : fe80::320d:9eff:fe73:e7c0%10
+                                       10.130.255.254
+   DHCP Server . . . . . . . . . . . : 10.130.255.254
+   DHCPv6 IAID . . . . . . . . . . . : 129821856
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2C-3E-14-E0-BC-EC-A0-03-7C-32
+   DNS Servers . . . . . . . . . . . : 2001:da8:100f:3991::3333
+                                       2001:da8:100f:3991::2222
+                                       10.245.1.10
+                                       10.245.1.11
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Wireless LAN adapter ��������* 1:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter
+   Physical Address. . . . . . . . . : D2-39-57-9C-F3-FB
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter ��������* 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #2
+   Physical Address. . . . . . . . . : F2-39-57-9C-F3-FB
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+
+Wireless LAN adapter WLAN:
+
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Realtek 8852CE WiFi 6E PCI-E NIC
+   Physical Address. . . . . . . . . : D0-39-57-9C-F3-FB
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes
+   IPv6 Address. . . . . . . . . . . : 2001:da8:100f:102:44bd:5500:3706:995d(Preferred) 
+   Temporary IPv6 Address. . . . . . : 2001:da8:100f:102:10b7:6887:1a4:ae6(Preferred) 
+   Link-local IPv6 Address . . . . . : fe80::db39:7ed7:9190:d64c%7(Preferred) 
+   IPv4 Address. . . . . . . . . . . : 10.130.5.118(Preferred) 
+   Subnet Mask . . . . . . . . . . . : 255.255.128.0
+   Lease Obtained. . . . . . . . . . : 2026��9��14�� 22:45:55
+   Lease Expires . . . . . . . . . . : 2026��9��15�� 2:45:55
+   Default Gateway . . . . . . . . . : fe80::320d:9eff:fe73:e7c0%7
+                                       10.130.127.254
+   DHCP Server . . . . . . . . . . . : 10.130.127.254
+   DHCPv6 IAID . . . . . . . . . . . : 80755031
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-2C-3E-14-E0-BC-EC-A0-03-7C-32
+   DNS Servers . . . . . . . . . . . : 2001:da8:100f:3991::3333
+                                       2001:da8:100f:3991::2222
+                                       10.245.1.10
+                                       10.245.1.11
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Ethernet adapter ������������:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . : 
+   Description . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   Physical Address. . . . . . . . . : D0-39-57-9C-F3-FC
+   DHCP Enabled. . . . . . . . . . . : Yes
+   Autoconfiguration Enabled . . . . : Yes

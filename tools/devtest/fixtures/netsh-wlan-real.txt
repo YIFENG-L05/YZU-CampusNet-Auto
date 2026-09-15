@@ -1,0 +1,5 @@
+﻿
+There is 1 interface on the system: 
+Function WlanQueryInterface returns error 5:
+The requested operation requires elevation (Run as administrator).
+

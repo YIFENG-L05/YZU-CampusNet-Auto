@@ -1,0 +1,1074 @@
+﻿
+Windows IP Configuration
+
+    osfsr.lenovomm.com
+    ----------------------------------------
+    Record Name . . . . . : osfsr.lenovomm.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 3
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : fsrcn.lenovomm.com
+
+
+    osfsr.lenovomm.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    Record Name . . . . . : osfsr.lenovomm.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86069
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : fsrcn.lenovomm.com
+
+
+    Record Name . . . . . : fsrcn.lenovomm.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86069
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 120.133.65.238
+
+
+    www.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : www.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : www.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.doubao.com.w.cdngslb.com
+
+
+    Record Name . . . . . : www.doubao.com.w.cdngslb.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.doubao.com.queniurc.com
+
+
+    Record Name . . . . . : www.doubao.com.queniurc.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.150.233.13
+
+
+    detectportal.firefox.com
+    ----------------------------------------
+    Record Name . . . . . : detectportal.firefox.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86243
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mozilla.map.fastly.net
+
+
+    Record Name . . . . . : mozilla.map.fastly.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86243
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2a04:4e42:7b::347
+
+
+    detectportal.firefox.com
+    ----------------------------------------
+    Record Name . . . . . : detectportal.firefox.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 64998
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mozilla.map.fastly.net
+
+
+    Record Name . . . . . : mozilla.map.fastly.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 64998
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 151.101.77.91
+
+
+    iQOO-11S.mshome.net
+    ----------------------------------------
+    No records of type AAAA
+
+
+    Record Name . . . . . : iQOO-11S.mshome.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.137.247
+
+
+    geo.prod.do.dsp.mp.microsoft.com
+    ----------------------------------------
+    Record Name . . . . . : geo.prod.do.dsp.mp.microsoft.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86050
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : geo.prod.do.dsp.trafficmanager.net
+
+
+    Record Name . . . . . : geo.prod.do.dsp.trafficmanager.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86050
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : array610.prod.do.dsp.mp.microsoft.com
+
+
+    Record Name . . . . . : array610.prod.do.dsp.mp.microsoft.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86050
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 72.145.35.105
+
+
+    www.microsoft.com
+    ----------------------------------------
+    Record Name . . . . . : www.microsoft.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.microsoft.com-c-3.edgekey.net
+
+
+    Record Name . . . . . : www.microsoft.com-c-3.edgekey.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : e13678.dscb.akamaiedge.net
+
+
+    Record Name . . . . . : e13678.dscb.akamaiedge.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2600:1417:4400:1196::356e
+
+
+    www.microsoft.com
+    ----------------------------------------
+    Record Name . . . . . : www.microsoft.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 71061
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.microsoft.com-c-3.edgekey.net
+
+
+    Record Name . . . . . : www.microsoft.com-c-3.edgekey.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 71061
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : e13678.dscb.akamaiedge.net
+
+
+    Record Name . . . . . : e13678.dscb.akamaiedge.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 71061
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 23.40.114.93
+
+
+    connection-center.vivo.com.cn
+    ----------------------------------------
+    Record Name . . . . . : connection-center.vivo.com.cn
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 39.156.159.176
+
+
+    ns3.dnsv5.com
+    ----------------------------------------
+    Record Name . . . . . : ns3.dnsv5.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 4
+    Section . . . . . . . : Additional
+    A (Host) Record . . . : 101.227.168.52
+
+
+    Record Name . . . . . : ns3.dnsv5.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 16
+    Section . . . . . . . : Additional
+    AAAA Record . . . . . : 2402:4e00:1840::f
+
+
+    ns4.dnsv5.com
+    ----------------------------------------
+    Record Name . . . . . : ns4.dnsv5.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 4
+    Section . . . . . . . : Additional
+    A (Host) Record . . . : 49.7.107.152
+
+
+    Record Name . . . . . : ns4.dnsv5.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 16
+    Section . . . . . . . : Additional
+    AAAA Record . . . . . : 2402:4e00:111:fff::8
+
+
+    mcs.zijieapi.com
+    ----------------------------------------
+    Record Name . . . . . : mcs.zijieapi.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.zijieapi.com.bytedns1.com
+
+
+    Record Name . . . . . : mcs.zijieapi.com.bytedns1.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.zijieapi.com.51296c5e.c.cdnhwc1.com
+
+
+    Record Name . . . . . : mcs.zijieapi.com.51296c5e.c.cdnhwc1.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : hcdndyn.zjtd04.v6.c.cdnhwc2.com
+
+
+    Record Name . . . . . : hcdndyn.zjtd04.v6.c.cdnhwc2.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c20:1834:526::43
+
+
+    mcs.zijieapi.com
+    ----------------------------------------
+    Record Name . . . . . : mcs.zijieapi.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.zijieapi.com.bytedns1.com
+
+
+    Record Name . . . . . : mcs.zijieapi.com.bytedns1.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.zijieapi.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : mcs.zijieapi.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.163.115.179
+
+
+    vivo-Pad-Air.mshome.net
+    ----------------------------------------
+    No records of type AAAA
+
+
+    Record Name . . . . . : vivo-Pad-Air.mshome.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 92.168.137.247
+
+
+    api.toutiaoapi.com
+    ----------------------------------------
+    Record Name . . . . . : api.toutiaoapi.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api.toutiaoapi.com.bytedns1.com
+
+
+    Record Name . . . . . : api.toutiaoapi.com.bytedns1.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api.toutiaoapi.com.w.cdngslb.com
+
+
+    Record Name . . . . . : api.toutiaoapi.com.w.cdngslb.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api.toutiaoapi.com.queniukw.com
+
+
+    Record Name . . . . . : api.toutiaoapi.com.queniukw.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86218
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.151.228.81
+
+
+    activity.windows.com
+    ----------------------------------------
+    Record Name . . . . . : activity.windows.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : consumer.activity.roaming.windows.cloud.microsoft
+
+
+    Record Name . . . . . : consumer.activity.roaming.windows.cloud.microsoft
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : activity.origincafe.tm.svc.cloud.microsoft
+
+
+    Record Name . . . . . : activity.origincafe.tm.svc.cloud.microsoft
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 4.145.11.36
+
+
+    247.137.168.92.in-addr.arpa.
+    ----------------------------------------
+    Record Name . . . . . : 247.137.168.92.in-addr.arpa.
+    Record Type . . . . . : 12
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    PTR Record  . . . . . : vivo-Pad-Air.mshome.net
+
+
+    self.events.data.microsoft.com
+    ----------------------------------------
+    Record Name . . . . . : self.events.data.microsoft.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 35165
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : self-events-data.trafficmanager.net
+
+
+    Record Name . . . . . : self-events-data.trafficmanager.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 35165
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : onedscolprdcus55.centralus.cloudapp.azure.com
+
+
+    Record Name . . . . . : onedscolprdcus55.centralus.cloudapp.azure.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 35165
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 4.150.223.111
+
+
+    1.137.168.192.in-addr.arpa.
+    ----------------------------------------
+    Record Name . . . . . : 1.137.168.192.in-addr.arpa.
+    Record Type . . . . . : 12
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    PTR Record  . . . . . : FENG-L.mshome.net
+
+
+    dig.bdurl.net
+    ----------------------------------------
+    Record Name . . . . . : dig.bdurl.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : dig-edge-perf.byte008.com
+
+
+    Record Name . . . . . : dig-edge-perf.byte008.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.156.92.229
+
+
+    api5-normal-hl.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : api5-normal-hl.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api5-normal-hl.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : api5-normal-hl.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-creative-doubao-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-creative-doubao-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c20:6ed1:18:8000:0:b00:104
+
+
+    api5-normal-hl.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : api5-normal-hl.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api5-normal-hl.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : api5-normal-hl.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-creative-doubao-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-creative-doubao-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.151.213.146
+
+
+    pc-mon.zijieapi.com
+    ----------------------------------------
+    Record Name . . . . . : pc-mon.zijieapi.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 55366
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : pc-mon.zijieapi.com.bytedns1.com
+
+
+    Record Name . . . . . : pc-mon.zijieapi.com.bytedns1.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 55366
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : pc-mon.zijieapi.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : pc-mon.zijieapi.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 55366
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 55366
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 223.109.53.92
+
+
+    mcs.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : mcs.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : mcs.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : mcs.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c20:6ed1:800:8000:0:b00:50
+
+
+    mcs.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : mcs.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : mcs.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mcs.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : mcs.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 223.109.239.178
+
+
+    api.deepseek.com
+    ----------------------------------------
+    Record Name . . . . . : api.deepseek.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 5
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api.deepseek.com.eo.dnse1.com
+
+
+    api.deepseek.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    Record Name . . . . . : api.deepseek.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 48192
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : api.deepseek.com.eo.dnse1.com
+
+
+    Record Name . . . . . : api.deepseek.com.eo.dnse1.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 48192
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.150.244.216
+
+
+    client.wns.windows.com
+    ----------------------------------------
+    Record Name . . . . . : client.wns.windows.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : wns.notify.trafficmanager.net
+
+
+    Record Name . . . . . : wns.notify.trafficmanager.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2603:1040:5:8::
+
+
+    client.wns.windows.com
+    ----------------------------------------
+    Record Name . . . . . : client.wns.windows.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : wns.notify.trafficmanager.net
+
+
+    Record Name . . . . . : wns.notify.trafficmanager.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86048
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 4.145.79.81
+
+
+    opt.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : opt.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : opt.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : opt.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : opt.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : opt.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c20:6ed1:18:8000:0:b00:103
+
+
+    opt.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : opt.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : opt.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : opt.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : opt.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : opt.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86042
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 36.163.115.179
+
+
+    catalog.gamepass.com
+    ----------------------------------------
+    Record Name . . . . . : catalog.gamepass.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : catalog.gamepass.com.edgesuite.net
+
+
+    Record Name . . . . . : catalog.gamepass.com.edgesuite.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : a1992.dscd.akamai.net
+
+
+    Record Name . . . . . : a1992.dscd.akamai.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2600:1417:4400:36::17c8:e64d
+
+
+    catalog.gamepass.com
+    ----------------------------------------
+    Record Name . . . . . : catalog.gamepass.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : catalog.gamepass.com.edgesuite.net
+
+
+    Record Name . . . . . : catalog.gamepass.com.edgesuite.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : a1992.dscd.akamai.net
+
+
+    Record Name . . . . . : a1992.dscd.akamai.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86270
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 23.33.184.231
+
+
+    247.137.168.192.in-addr.arpa.
+    ----------------------------------------
+    Record Name . . . . . : 247.137.168.192.in-addr.arpa.
+    Record Type . . . . . : 12
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    PTR Record  . . . . . : iQOO-11S.mshome.net
+
+
+    feishu.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : feishu.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 80081
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : feishu.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : feishu.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 80081
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : feishu.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : feishu.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 80081
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 80081
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c20:8ab1:208:8000:0:b00:49
+
+
+    feishu.doubao.com
+    ----------------------------------------
+    Record Name . . . . . : feishu.doubao.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 33287
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : feishu.doubao.com.bytedns3.com
+
+
+    Record Name . . . . . : feishu.doubao.com.bytedns3.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 33287
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : feishu.doubao.com.c.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : feishu.doubao.com.c.dsa.cdnbuild.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 33287
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+
+
+    Record Name . . . . . : l7-online-self-max-v6.s.dsa.cdnbuild.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 33287
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 223.109.239.178
+
+
+    connect.rom.miui.com
+    ----------------------------------------
+    Record Name . . . . . : connect.rom.miui.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86243
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : miphone-ai-platform-pri-prod.alb.xiaomi.com
+
+
+    Record Name . . . . . : miphone-ai-platform-pri-prod.alb.xiaomi.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86243
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 111.13.40.33
+
+
+    www.msftconnecttest.com
+    ----------------------------------------
+    Record Name . . . . . : www.msftconnecttest.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86071
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : www.msftconnecttest.com.edgesuite.net
+
+
+    Record Name . . . . . : www.msftconnecttest.com.edgesuite.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86071
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : a39.d.akamai.net
+
+
+    Record Name . . . . . : a39.d.akamai.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86071
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 23.46.230.144
+
+
+    ipv6.msftconnecttest.com
+    ----------------------------------------
+    Record Name . . . . . : ipv6.msftconnecttest.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86072
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : ipv6.msftconnecttest.com.edgesuite.net
+
+
+    Record Name . . . . . : ipv6.msftconnecttest.com.edgesuite.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86072
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : a1968.i6g1.akamai.net
+
+
+    Record Name . . . . . : a1968.i6g1.akamai.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86072
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2600:1417:4400:3::1731:68d6
+
+
+    ipv6.msftconnecttest.com
+    ----------------------------------------
+    Record Name . . . . . : ipv6.msftconnecttest.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : ipv6.msftconnecttest.com.edgesuite.net
+
+
+    Record Name . . . . . : ipv6.msftconnecttest.com.edgesuite.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : a1968.i6g1.akamai.net
+
+
+    Record Name . . . . . : a1968.i6g1.akamai.net
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86041
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2600:1417:4400:3::1731:68d5
+
+
+    dns.weixin.qq.com.cn
+    ----------------------------------------
+    Record Name . . . . . : dns.weixin.qq.com.cn
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 16
+    Section . . . . . . . : Answer
+    AAAA Record . . . . . : 2409:8c54:871:2005::4e
+
+
+    ns1.qq.com
+    ----------------------------------------
+    Record Name . . . . . : ns1.qq.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 4
+    Section . . . . . . . : Additional
+    A (Host) Record . . . : 203.205.220.251
+
+
+    Record Name . . . . . : ns1.qq.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 16
+    Section . . . . . . . : Additional
+    AAAA Record . . . . . : 2402:4e00:c050:7a00::3
+
+
+    dns.weixin.qq.com.cn
+    ----------------------------------------
+    Record Name . . . . . : dns.weixin.qq.com.cn
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 39.156.140.47
+
+
+    ns1.qq.com
+    ----------------------------------------
+    Record Name . . . . . : ns1.qq.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 4
+    Section . . . . . . . : Additional
+    A (Host) Record . . . : 183.60.116.2
+
+
+    Record Name . . . . . : ns1.qq.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 16
+    Section . . . . . . . : Additional
+    AAAA Record . . . . . : 2402:4e00:c050:7a00::3
+
+
+    ns2.qq.com
+    ----------------------------------------
+    Record Name . . . . . : ns2.qq.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 4
+    Section . . . . . . . : Additional
+    A (Host) Record . . . : 49.7.250.140
+
+
+    Record Name . . . . . : ns2.qq.com
+    Record Type . . . . . : 28
+    Time To Live  . . . . : 86075
+    Data Length . . . . . : 16
+    Section . . . . . . . : Additional
+    AAAA Record . . . . . : 240e:974:e600:3ee::2
+
+
+    mobile.events.data.microsoft.com
+    ----------------------------------------
+    Record Name . . . . . : mobile.events.data.microsoft.com
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 4989
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : mobile.events.data.trafficmanager.net
+
+
+    Record Name . . . . . : mobile.events.data.trafficmanager.net
+    Record Type . . . . . : 5
+    Time To Live  . . . . : 4989
+    Data Length . . . . . : 8
+    Section . . . . . . . : Answer
+    CNAME Record  . . . . : onedscolprdcus72.centralus.cloudapp.azure.com
+
+
+    Record Name . . . . . : onedscolprdcus72.centralus.cloudapp.azure.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 4989
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 4.150.223.99
+
+
+    FENG-L.mshome.net
+    ----------------------------------------
+    No records of type AAAA
+
+
+    Record Name . . . . . : FENG-L.mshome.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 424844
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.137.1
+
+

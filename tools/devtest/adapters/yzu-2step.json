@@ -1,0 +1,30 @@
+{
+  "id": "mock-yzu-2step",
+  "name": "模拟门户 · 统一身份认证 + 可选的服务选择页（复刻真实行为）",
+  "_devOnly": true,
+  "_scenario": "真实情况：认证成功后会弹出选择运营商页面（移动/联通/电信/校园网内网）；选过一次后门户记住了，之后不再弹这个页面。所以这一组步骤必须是可选的，页面不出现时整组跳过、登录照常完成。",
+  "urlPatterns": ["/sso/login", "eportal/index\\.jsp"],
+  "readySelector": "input[name=\"username\"]:not([type=hidden])",
+  "readyTimeoutMs": 15000,
+  "username": "input[name=\"username\"]:not([type=hidden])",
+  "password": "input[type=\"password\"]",
+  "operator": {
+    "kind": "select",
+    "selector": "select#service",
+    "_note": "刻意不给 values 映射：真实服务选择页只在认证后才出现，拿不到 option 的 value。select 脚本会按 option 的显示文字匹配，所以留空也能工作。",
+    "values": {}
+  },
+  "successTexts": ["认证成功"],
+  "errorTexts": ["用户名或密码错误", "密码错误", "请选择正确的网络服务"],
+  "waitAfterSubmitMs": 12000,
+  "steps": [
+    { "action": "waitFor", "selector": "input[name=\"username\"]:not([type=hidden])", "timeoutMs": 15000 },
+    { "action": "fill" },
+    { "action": "sleep", "ms": 200 },
+    { "action": "submit", "selector": "button.login-button[type=\"submit\"]" },
+    { "action": "waitFor", "selector": "select#service", "timeoutMs": 8000, "optional": true, "group": "service" },
+    { "action": "select", "selector": "select#service", "valueFrom": "operator", "optional": true, "group": "service" },
+    { "action": "click", "selector": "#svcConfirm", "optional": true, "group": "service" },
+    { "action": "sleep", "ms": 800 }
+  ]
+}

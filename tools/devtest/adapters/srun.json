@@ -1,0 +1,19 @@
+{
+  "id": "mock-srun",
+  "name": "模拟门户 · 深澜形态（select + 按钮 onclick）",
+  "_devOnly": true,
+  "urlPatterns": ["127\\.0\\.0\\.1:18080"],
+  "readySelector": "#username",
+  "username": "#username",
+  "password": "#password",
+  "operator": {
+    "kind": "select",
+    "selector": "#domain",
+    "values": { "中国移动": "@cmcc", "中国联通": "@unicom", "中国电信": "@telecom" }
+  },
+  "loginButton": "#loginBtn",
+  "submitForm": null,
+  "successTexts": ["认证成功"],
+  "errorTexts": ["密码错误", "账号或密码错误", "用户名不存在", "认证失败"],
+  "waitAfterSubmitMs": 4000
+}

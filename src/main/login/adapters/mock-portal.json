@@ -1,0 +1,23 @@
+{
+  "id": "mock-portal",
+  "name": "本地模拟门户（开发自测用，请勿用于真实校园网）",
+  "urlPatterns": ["127\\.0\\.0\\.1:18080", "localhost:18080"],
+  "readySelector": "input#username",
+  "username": "input#username",
+  "password": "input#password",
+  "operator": {
+    "kind": "select",
+    "selector": "select#domain",
+    "values": {
+      "中国移动": "@cmcc",
+      "中国联通": "@unicom",
+      "中国电信": "@telecom"
+    }
+  },
+  "loginButton": "button#loginBtn",
+  "submitForm": null,
+  "successTexts": ["认证成功", "登录成功", "已连接"],
+  "errorTexts": ["密码错误", "账号或密码错误", "用户名不存在", "认证失败"],
+  "waitAfterSubmitMs": 4000,
+  "submitDelayMs": 150
+}

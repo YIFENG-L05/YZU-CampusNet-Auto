@@ -1,0 +1,42 @@
+# ── 依赖 ──
+node_modules/
+
+# ── 构建产物 ──
+dist/
+release/
+out/
+
+# ── 本地缓存 ──
+# .npm-cache / .cache 刻意放在项目内（理由见 .npmrc 顶部注释），好处是"删项目目录 = 彻底清理"。
+# 其中 .cache/userdata 是开发期的数据目录：配置、凭据、日志、截图都在里面，绝不能提交。
+.npm-cache/
+.cache/
+
+# ── 探针产物 ──
+# 记录着本校门户的真实结构与设备标识，属于本地资料。
+tools/out/
+
+# ── 敏感文件兜底 ──
+# 正式版凭据走 Windows DPAPI，存在 %APPDATA%\CampusNetAuto（仓库之外）。
+# 这一节是防止明文凭证被误放进项目后又被提交。
+credential.bin
+config.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ── 日志与临时文件 ──
+*.log
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
+
+# ── 编辑器 ──
+.vscode/
+.idea/
+*.swp

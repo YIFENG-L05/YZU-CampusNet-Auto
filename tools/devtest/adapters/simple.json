@@ -1,0 +1,19 @@
+{
+  "id": "mock-simple",
+  "name": "模拟门户 · 纯静态表单，input[type=submit]，不加密",
+  "_devOnly": true,
+  "urlPatterns": ["127\\.0\\.0\\.1:18080"],
+  "readySelector": "#username",
+  "username": "#username",
+  "password": "#password",
+  "operator": {
+    "kind": "select",
+    "selector": "#domain",
+    "values": { "中国移动": "@cmcc", "中国联通": "@unicom", "中国电信": "@telecom" }
+  },
+  "loginButton": "#submitBtn",
+  "submitForm": null,
+  "successTexts": ["认证成功"],
+  "errorTexts": ["密码错误", "账号或密码错误", "用户名不存在", "认证失败"],
+  "waitAfterSubmitMs": 4000
+}

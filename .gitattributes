@@ -1,0 +1,13 @@
+# 统一行尾，避免不同机器上产生无意义的整文件 diff。
+# 仓库内统一存 LF；Windows 专用脚本保持 CRLF（cmd 对 LF 的处理在个别情况下会出问题）。
+* text=auto eol=lf
+
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+*.nsh  text eol=crlf
+
+# 二进制资源不要做行尾转换
+*.ico  binary
+*.png  binary
+*.exe  binary

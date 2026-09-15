@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:">
+  <title>校园网自动连接助手</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ 首次配置 ============ -->
+<section id="setup-view" class="view hidden">
+  <h1>校园网自动连接助手</h1>
+
+  <div class="field">
+    <label for="setup-account">校园网账号</label>
+    <input id="setup-account" type="text" autocomplete="off" placeholder="学号 / 工号">
+  </div>
+
+  <div class="field">
+    <label for="setup-password">校园网密码</label>
+    <input id="setup-password" type="password" autocomplete="off" placeholder="密码">
+    <p class="hint">密码用 Windows 系统加密保存在本机，不会上传。</p>
+  </div>
+
+  <div class="field" id="setup-operator-field">
+    <label for="setup-operator">运营商</label>
+    <select id="setup-operator"></select>
+  </div>
+
+  <div class="actions">
+    <button id="btn-save" class="primary">保存配置</button>
+    <button id="btn-test" class="secondary">测试连接</button>
+  </div>
+
+  <div id="setup-result" class="result hidden"></div>
+</section>
+
+<!-- ============ 主界面 ============ -->
+<section id="main-view" class="view hidden">
+  <h1>校园网自动连接助手</h1>
+
+  <div class="status-card">
+    <div class="status-line">
+      <span id="status-dot" class="dot"></span>
+      <span id="status-text">正在检测…</span>
+    </div>
+    <div id="status-detail" class="status-detail"></div>
+  </div>
+
+  <div id="attention-box" class="result hidden"></div>
+
+  <dl class="info">
+    <dt>账号</dt><dd id="info-account">—</dd>
+    <dt>运营商</dt><dd id="info-operator">—</dd>
+    <dt>上次连接</dt><dd id="info-last">—</dd>
+  </dl>
+
+  <div class="checks">
+    <label class="check"><input type="checkbox" id="chk-autostart"> 开机自动连接</label>
+    <p class="hint" id="autostart-hint"></p>
+    <label class="check"><input type="checkbox" id="chk-autoreconnect"> 断网自动重连</label>
+  </div>
+
+  <div class="actions">
+    <button id="btn-connect" class="primary">立即连接</button>
+    <button id="btn-pause" class="secondary">暂停自动连接</button>
+  </div>
+  <div class="actions">
+    <button id="btn-recheck" class="secondary">重新检测</button>
+    <button id="btn-hide" class="secondary">收起窗口</button>
+  </div>
+
+  <div id="main-result" class="result hidden"></div>
+
+  <div class="footer-actions">
+    <button id="btn-edit" class="link">修改配置</button>
+    <button id="btn-opendir" class="link">打开数据目录</button>
+    <button id="btn-clear" class="link danger">清除已保存的密码</button>
+    <button id="btn-uninstall" class="link danger">卸载程序</button>
+  </div>
+
+  <div id="uninstall-panel" class="result hidden"></div>
+  <div class="actions hidden" id="uninstall-actions">
+    <button id="btn-uninstall-confirm" class="danger-solid">确认卸载</button>
+    <button id="btn-uninstall-cancel" class="secondary">取消</button>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

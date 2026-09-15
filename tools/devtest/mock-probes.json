@@ -1,0 +1,19 @@
+{
+  "_comment": "开发自测用：把连通性探测点指向本地模拟校园网。仅 tools/devtest 使用，程序正式运行不会读这个文件。",
+  "probes": [
+    {
+      "name": "Mock NCSI",
+      "url": "http://127.0.0.1:18080/connecttest.txt",
+      "kind": "body",
+      "expect": "Microsoft Connect Test"
+    },
+    {
+      "name": "Mock generate_204",
+      "url": "http://127.0.0.1:18080/generate_204",
+      "kind": "204"
+    }
+  ],
+  "endpoints": [
+    { "name": "Mock portal discovery", "url": "http://127.0.0.1:18080/redirect" }
+  ]
+}
