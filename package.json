@@ -5,7 +5,7 @@
   "description": "扬州大学校园网自动登录与自动重连助手（Windows 桌面应用）",
   "private": false,
   "license": "MIT",
-  "author": "YZU-CampusNet-Auto",
+  "author": "FENG-L",
   "main": "src/main/index.js",
   "type": "commonjs",
   "scripts": {
