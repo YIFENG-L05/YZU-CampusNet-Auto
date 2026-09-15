@@ -16,19 +16,21 @@ jobs:
   build:
     runs-on: windows-latest
 
-    env:
-      # 覆盖项目 .npmrc 里的国内镜像。
-      # 原因：.npmrc 配 npmmirror 是为了本机（校园网）下载稳定；
-      # GitHub Runner 本身就在 GitHub 网络上，直连官方源更快、少一跳。
-      # 这两个变量由 @electron/get 与 electron-builder 直接读取，优先级高于 npm 配置。
-      ELECTRON_MIRROR: https://github.com/electron/electron/releases/download/
-      ELECTRON_BUILDER_BINARIES_MIRROR: https://github.com/electron-userland/electron-builder-binaries/releases/download/
-      #
-      # ⚠ 这里刻意**不**设置 npm 缓存目录。
-      #   项目 .npmrc 里有 `cache=./.npm-cache`，在 CI 上只会在工作区建一个目录，
-      #   无害。而 `${{ runner.temp }}` 这个上下文在 job 级 env 里**不可用** ——
-      #   写上去会让整个工作流在解析阶段就失败，表现为"跑了 0 秒、一个 job 都没有"。
-      #   （这个坑实际踩过：v1.0.0 第一次推送时两次运行都是 0 秒失败。）
+    # ⚠ 刻意**不覆盖** Electron 与 electron-builder 的下载镜像。
+    #
+    # 踩过的坑：一开始这里把镜像改成了 GitHub 官方地址，想着"Runner 就在 GitHub 网络上，
+    # 少一跳更快"。结果 v1.0.0 的构建在 CI 上失败（测试全过、只有打包这步挂），
+    # 而本地完全正常。原因：electron-builder 的各构件走**不同的 URL 拼接规则**
+    # （nsis / nsis-resources 是一套，7zip-win-x64.tar.gz 又是另一套），
+    # 换基址会让其中一部分指到不存在的路径。
+    #
+    # 现在直接用项目 .npmrc 里配好的 npmmirror —— 这套配置已经用
+    # **清空 electron-builder 缓存后重新构建**实测通过（nsis、7zip、nsis-resources
+    # 三个构件都能正常下载并完成打包），保持本地与 CI 完全一致。
+    #
+    # 另外也不要在这里设 npm 缓存目录：`${{ runner.temp }}` 这个上下文在 job 级
+    # env 里**不可用**，写上去会让整个工作流在解析阶段就失败，
+    # 表现为"跑了 0 秒、一个 job 都没有"（这个坑也实际踩过）。
 
     steps:
       - name: 检出代码
