@@ -76,24 +76,48 @@ console.log('\n=== 2. checkConnectivity：状态机与 DNS 兜底 ===');
   ok(r2.stateReason.includes('链路未就绪'), 'NO_LINK 的判定依据有说明文字');
 
   // ---------------------------------------------------------------- 3. 门户候选甄别
+  //
+  // ⚠ 表驱动化：原来 10 条独立断言，本质是同一套规则在不同输入上的取值。
+  //   同类规则在 find-portal-url-tests 里对**另一份独立实现**也测过
+  //   （tools/find-portal-url.js 的 classify，它没有复用 probe.js），
+  //   两者不能互相替代，所以两边都保留、各自压缩成表驱动。
+  //   覆盖场景：明确命中 / 明确不命中 / 优先级 / 边界 / 无效候选 / 多候选决策。
   console.log('\n=== 3. 门户候选甄别：不能把正常互联网主机当门户 ===');
 
-  ok(probe.isNonPortalHost('http://go.microsoft.com/fwlink/?LinkID=219472'), 'go.microsoft.com 被识别为非门户');
-  ok(probe.isNonPortalHost('http://www.msftconnecttest.com/x'), 'msftconnecttest.com 被识别为非门户');
-  ok(!probe.isNonPortalHost('http://10.0.0.1/srun_portal_pc'), '私网地址不被排除');
-  ok(!probe.isNonPortalHost('http://portal.school.edu.cn/login'), '学校域名不被排除');
+  // 不该被当成门户的主机  vs  不该被误排除的主机
+  const NON_PORTAL_HOSTS = [
+    ['http://go.microsoft.com/fwlink/?LinkID=219472', 'go.microsoft.com（Windows 探测跳转）'],
+    ['http://www.msftconnecttest.com/x', 'msftconnecttest.com（连通性探测点）'],
+  ];
+  const KEPT_HOSTS = [
+    ['http://10.0.0.1/srun_portal_pc', '私网地址'],
+    ['http://portal.school.edu.cn/login', '学校域名'],
+  ];
+  const wronglyKept = NON_PORTAL_HOSTS.filter(([u]) => !probe.isNonPortalHost(u)).map(([u, w]) => w + ' ← ' + u);
+  const wronglyDropped = KEPT_HOSTS.filter(([u]) => probe.isNonPortalHost(u)).map(([u, w]) => w + ' ← ' + u);
+  ok(
+    wronglyKept.length === 0 && wronglyDropped.length === 0,
+    '主机甄别：探测用主机被排除，私网 / 学校域名不被误排除',
+    { wronglyKept, wronglyDropped }
+  );
 
+  // 地址打分优先级：默认网关 > 公网域名；路径含门户关键字要加分
   const gw = ['10.20.30.1'];
-  ok(probe.scoreHost('http://10.20.30.1/portal', gw) > probe.scoreHost('http://portal.school.edu.cn/login', gw),
-    '默认网关的地址分数高于公网域名');
-  ok(probe.scoreHost('http://10.0.0.1/srun_portal_pc?ac_id=1', []) > probe.scoreHost('http://10.0.0.1/', []),
-    'URL 含 portal/srun 关键字加分');
+  const gwBeatsPublic =
+    probe.scoreHost('http://10.20.30.1/portal', gw) > probe.scoreHost('http://portal.school.edu.cn/login', gw);
+  const pathBonus =
+    probe.scoreHost('http://10.0.0.1/srun_portal_pc?ac_id=1', []) > probe.scoreHost('http://10.0.0.1/', []);
+  ok(gwBeatsPublic && pathBonus, '地址打分：默认网关优先于公网域名，且路径关键字加分', { gwBeatsPublic, pathBonus });
 
+  // 页面打分：真正的登录页为正、空白页为负
   const goodPage = { ok: true, hasPasswordFieldInHtml: true, forms: [{ method: 'POST' }], selects: [{ options: [{ label: '中国移动' }] }], vendors: ['深澜 Srun'], inputs: [{ placeholder: '请输入账号' }], buttons: [{ text: '登录' }], keywordHits: { get_challenge: 1 } };
   const badPage = { ok: true, hasPasswordFieldInHtml: false, forms: [], selects: [], vendors: [], inputs: [], buttons: [], keywordHits: {} };
-  ok(probe.scorePage(goodPage) > 0, '登录页得分为正', probe.scorePage(goodPage));
-  ok(probe.scorePage(badPage) < 0, '空白页得分为负', probe.scorePage(badPage));
+  ok(probe.scorePage(goodPage) > 0 && probe.scorePage(badPage) < 0, '页面打分：登录页为正、空白页为负', {
+    good: probe.scorePage(goodPage),
+    bad: probe.scorePage(badPage),
+  });
 
+  // 多候选决策：跳过探测主机选中真实门户，并如实记录被排除的候选
   const picked = await probe.pickPortal(
     [
       { url: 'http://go.microsoft.com/fwlink/?LinkID=1', source: 'NCSI' },
@@ -101,8 +125,13 @@ console.log('\n=== 2. checkConnectivity：状态机与 DNS 兜底 ===');
     ],
     { gateways: gw, analyze: async (u) => (u.includes('10.0.0.1') ? goodPage : badPage) }
   );
-  eq(picked.chosen.url, 'http://10.0.0.1/portal', 'pickPortal 跳过 go.microsoft.com 选中真实门户');
-  eq(picked.rejected, ['http://go.microsoft.com/fwlink/?LinkID=1'], '被排除的候选被如实记录');
+  ok(
+    picked.chosen.url === 'http://10.0.0.1/portal' &&
+      picked.rejected.length === 1 &&
+      picked.rejected[0] === 'http://go.microsoft.com/fwlink/?LinkID=1',
+    '多候选决策：跳过探测主机选中真实门户，并如实记录被排除的候选',
+    { chosen: picked.chosen.url, rejected: picked.rejected }
+  );
 
   // ---------------------------------------------------------------- 4. 适配器校验
   console.log('\n=== 4. normalizeAdapter：配置错误要尽早暴露 ===');

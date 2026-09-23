@@ -107,52 +107,60 @@ const engineApi = new Set(Object.keys(svc.engine));
 console.log('  服务暴露的 API: ' + [...svcApi].sort().join(', '));
 console.log('  engine 暴露的 API: ' + [...engineApi].sort().join(', '));
 
-// ── 3. 这次故障的直接断言 ──
-console.log('\n=== 2. 本次故障的直接回归 ===');
-ok(typeof svc.recheckSoon === 'function', '★ autoService.recheckSoon 存在（就是这次崩的那一处）');
-ok(typeof svc.noteWake === 'function', 'autoService.noteWake 存在');
-ok(typeof svc.start === 'function', 'autoService.start 存在');
-ok(typeof svc.stop === 'function', 'autoService.stop 存在');
-ok(typeof svc.engine === 'object' && svc.engine !== null, 'autoService.engine 存在');
-
-// ── 4. 扫所有调用点，逐个比对 ──
-console.log('\n=== 3. 扫调用点：index.js / ipc.js 里调的每个方法都得真的存在 ===');
+// ── 3. API 契约扫描（本次故障的直接回归）──
+//
+// ⚠ 这个机制**必须保留**：它抓到过真实故障 —— index.js 里写了
+//   `autoService.recheckSoon()`，而该方法挂在 engine 上、服务层没暴露，
+//   平时不触发，直到用户**解锁屏幕**时才抛 TypeError 弹出未捕获异常框。
+//
+//   但原来拆成了三段：手工列方法存在性（§2）、扫调用点（§3）、engine 关键方法（§5），
+//   同一批名字验了三遍。现在合并成**一次扫描**：覆盖不变，
+//   失败时一次性列出全部不匹配项（比散成 24 条 PASS 更好定位）。
+console.log('\n=== 2. API 契约扫描：调用方用到的每个方法都必须真实存在 ===');
 
 const CALLER_FILES = ['src/main/index.js', 'src/main/ipc.js'];
+
+// 每个检查项：{ 来源, 表达式, 该在的 API 集合, 方法名 }
+const contractItems = [];
 
 for (const rel of CALLER_FILES) {
   const src = fs.readFileSync(path.join(ROOT, rel), 'utf8');
 
+  // autoService.xxx(   —— 不会误匹配 autoService.engine.xxx(，因为 engine 后面是 "." 不是 "("
+  const svcCalls = [...new Set([...src.matchAll(/autoService\.(\w+)\s*\(/g)].map((m) => m[1]))];
   // autoService.engine.xxx(
   const engineCalls = [...new Set([...src.matchAll(/autoService\.engine\.(\w+)\s*\(/g)].map((m) => m[1]))];
-  // autoService.xxx(   —— 注意：这一段不会误匹配 autoService.engine.xxx(，
-  //                     因为 engine 后面是 "." 而不是 "("
-  const svcCalls = [...new Set([...src.matchAll(/autoService\.(\w+)\s*\(/g)].map((m) => m[1]))];
 
-  console.log('  ' + rel + ':');
-  console.log('    autoService.<x>        → ' + (svcCalls.join(', ') || '(无)'));
-  console.log('    autoService.engine.<x> → ' + (engineCalls.join(', ') || '(无)'));
-
-  for (const name of svcCalls) {
-    ok(svcApi.has(name), rel + ' 调用的 autoService.' + name + '() 确实存在');
-  }
-  for (const name of engineCalls) {
-    ok(engineApi.has(name), rel + ' 调用的 autoService.engine.' + name + '() 确实存在');
-  }
+  for (const n of svcCalls) contractItems.push({ rel, expr: 'autoService.' + n + '()', api: svcApi, name: n });
+  for (const n of engineCalls) contractItems.push({ rel, expr: 'autoService.engine.' + n + '()', api: engineApi, name: n });
 }
 
-// ── 5. 反向检查：服务暴露了但没人用的方法（提示，不算失败）──
-console.log('\n=== 4. 提示：服务暴露但调用点没用到的方法 ===');
+// 引擎对外的关键契约：调用点扫不到，但状态机承诺提供（界面与托盘依赖它们）
+const ENGINE_CONTRACT = ['recheckSoon', 'start', 'stop', 'connectNow', 'setPaused', 'getSnapshot'];
+for (const n of ENGINE_CONTRACT) {
+  contractItems.push({ rel: '(engine 契约)', expr: 'engine.' + n + '()', api: engineApi, name: n });
+}
+
+// 服务层本身对外的契约
+for (const n of ['engine', 'start', 'stop', 'noteWake', 'recheckSoon']) {
+  contractItems.push({ rel: '(service 契约)', expr: 'autoService.' + n, api: svcApi, name: n });
+}
+
+const broken = contractItems.filter((c) => !c.api.has(c.name)).map((c) => c.rel + ' → ' + c.expr);
+
+console.log('  扫描了 ' + CALLER_FILES.length + ' 个调用方文件，共 ' + contractItems.length + ' 个契约项');
+ok(
+  broken.length === 0,
+  'API 契约完整（' + contractItems.length + ' 项：调用点 + engine/service 对外承诺）',
+  broken.length ? broken : undefined
+);
+
+// ── 反向检查：服务暴露了但没人用的方法（提示，不算失败）──
+console.log('\n=== 3. 提示：服务暴露但调用点没用到的方法 ===');
 const allSrc = CALLER_FILES.map((f) => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n');
 const usedSvc = new Set([...allSrc.matchAll(/autoService\.(\w+)\s*\(/g)].map((m) => m[1]));
 const unused = [...svcApi].filter((k) => k !== 'engine' && !usedSvc.has(k));
 console.log('  ' + (unused.join(', ') || '(无)') + '（仅提示，不判失败）');
-
-// ── 6. 同类风险：状态机引擎自身的一致性 ──
-console.log('\n=== 5. engine 的关键方法齐不齐 ===');
-for (const m of ['recheckSoon', 'start', 'stop', 'connectNow', 'setPaused', 'getSnapshot']) {
-  ok(typeof svc.engine[m] === 'function', 'engine.' + m + ' 是函数');
-}
 
 console.log('\n==========================================================');
 console.log('  通过 ' + pass + ' 项，失败 ' + fail + ' 项');

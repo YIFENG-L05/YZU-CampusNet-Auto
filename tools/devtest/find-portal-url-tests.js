@@ -27,31 +27,56 @@ function ok(c, label, extra) {
   else { fail++; console.log('  FAIL  ' + label + (extra !== undefined ? '  -> ' + JSON.stringify(extra) : '')); }
 }
 
-console.log('\n=== 1. 门户候选判定 ===');
+console.log('\n=== 1. 门户候选判定（表驱动）===');
 
-ok(!!finder.classify('http://10.130.255.1/srun_portal_pc?ac_id=1&theme=basic'), '深澜风格 URL 命中（内网 + srun）');
-ok(!!finder.classify('http://10.0.0.1/eportal/index.jsp?wlanuserip=1.2.3.4'), '锐捷 ePortal URL 命中');
-ok(!!finder.classify('http://192.168.1.1/portal/login'), '内网 + portal 命中');
-ok(!!finder.classify('https://portal.school.edu.cn/login'), '教育网域名 + login 命中');
-ok(!!finder.classify('http://1.2.3.4/0.htm?wlanacname=abc'), 'Dr.COM 风格（wlanacname）命中');
+// ⚠ 为什么改成表驱动：
+//   原来这里有 18 条独立断言，但它们其实只是**同一套打分规则在不同输入上的取值**。
+//   注意：同类规则在 phase1-tests 里还对生产实现（src/main/net/probe.js）测了一遍，
+//   而本文件测的是 tools/find-portal-url.js 里**另一份独立实现**（它没有复用 probe.js），
+//   两者不能互相替代 —— 所以两边都保留，但各自压成表驱动。
+//   压成 4 条后，失败时会一次性列出所有不符合的用例，定位比 18 条散装 PASS 更快。
+//
+//   覆盖场景：明确命中 / 明确不命中（含无效候选、协议、公网域名）/ 强特征得分与理由 / 证据层级。
 
-eq(finder.classify('https://www.google.com/search?q=x'), null, '普通公网站点被排除');
-eq(finder.classify('https://www.baidu.com/'), null, '百度被排除');
-eq(finder.classify('https://github.com/foo/bar'), null, 'GitHub 被排除');
-eq(finder.classify('not a url'), null, '非法 URL 返回 null');
+const HIT_CASES = [
+  ['http://10.130.255.1/srun_portal_pc?ac_id=1&theme=basic', '深澜（内网 + srun）'],
+  ['http://10.0.0.1/eportal/index.jsp?wlanuserip=1.2.3.4', '锐捷 ePortal'],
+  ['http://192.168.1.1/portal/login', '内网 + portal'],
+  ['https://portal.school.edu.cn/login', '教育网域名 + login'],
+  ['http://1.2.3.4/0.htm?wlanacname=abc', 'Dr.COM（wlanacname）'],
+  ['https://portal.example.com/srun_portal_pc?ac_id=1', '公网主机但**路径**含门户关键字'],
+];
 
+const MISS_CASES = [
+  ['https://www.google.com/search?q=x', '普通公网站点'],
+  ['https://www.baidu.com/', '百度'],
+  ['https://github.com/foo/bar', 'GitHub'],
+  ['not a url', '非法 URL'],
+  ['https://portal.azure.com/', '公网 portal.* 但无路径级证据'],
+  ['https://portal.example.com/', '任意公网 portal.* 默认不算候选'],
+  ['ftp://10.0.0.1/portal', 'ftp 协议'],
+  ['file:///C:/portal.html', 'file 协议'],
+];
+
+const missed = HIT_CASES.filter(([u]) => !finder.classify(u)).map(([u, why]) => why + ' ← ' + u);
+ok(missed.length === 0, '应命中：' + HIT_CASES.length + ' 个全部命中', missed.length ? missed : undefined);
+
+const falsePositives = MISS_CASES.filter(([u]) => finder.classify(u) !== null).map(([u, why]) => why + ' ← ' + u);
+ok(
+  falsePositives.length === 0,
+  '应排除：' + MISS_CASES.length + ' 个全部排除（无效候选 / 协议 / 公网域名）',
+  falsePositives.length ? falsePositives : undefined
+);
+
+// 强特征：得分要够高，且要给出可读理由（这些理由会出现在日志和界面里）
 const strong = finder.classify('http://10.130.255.1/srun_portal_pc?ac_id=1');
-ok(strong.score >= 10, '强特征 URL 得分足够高', strong.score);
-ok(strong.reasons.includes('URL 路径含门户关键字'), '给出了"路径含门户关键字"的理由');
-ok(strong.reasons.includes('内网地址'), '给出了"内网地址"的理由');
+ok(
+  strong.score >= 10 && strong.reasons.includes('URL 路径含门户关键字') && strong.reasons.includes('内网地址'),
+  '强特征 URL：得分足够高，且给出「路径关键字」「内网地址」两条理由',
+  strong
+);
 
-// 公网主机只有"域名里带 portal"是不够的，必须有路径级证据
-eq(finder.classify('https://portal.azure.com/'), null, 'portal.azure.com 被排除（公网域名带 portal 不算证据）');
-eq(finder.classify('https://portal.example.com/'), null, '任意公网 portal.* 域名默认不算候选');
-ok(!!finder.classify('https://portal.example.com/srun_portal_pc?ac_id=1'), '公网主机但路径含门户关键字时才算候选');
-eq(finder.classify('ftp://10.0.0.1/portal'), null, 'ftp 协议被排除');
-eq(finder.classify('file:///C:/portal.html'), null, 'file 协议被排除');
-
+// 证据层级：静态资源不该与真正的登录页同分
 const jsAsset = finder.classify('http://10.0.0.1/portal/static/app.js');
 ok(jsAsset && jsAsset.score < strong.score, '静态资源得分低于真正的登录页', jsAsset && jsAsset.score);
 

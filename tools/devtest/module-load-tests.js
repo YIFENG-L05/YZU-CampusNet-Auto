@@ -67,7 +67,7 @@ for (const [file, exports] of EXPECTED) {
   ok(missing.length === 0, file + ' 可加载且导出完整', missing.length ? { missing } : undefined);
 }
 
-console.log('\n=== 2. 需要 Electron 的模块：只检查文件存在与语法（真正加载放在 Electron 里做）===');
+console.log('\n=== 2. 需要 Electron 的模块：语法必须合法 ===');
 
 const fs = require('fs');
 const vm = require('vm');
@@ -76,24 +76,30 @@ const vm = require('vm');
  * 用 vm.Script 做语法检查。
  * 刻意不用 `node --check` 走子进程：本环境里 Node 无法用管道 spawn 子进程（会 EPERM），
  * 而且 vm.Script 只编译不执行，正好是我们要的。
+ *
+ * ⚠ 这里**不再**逐文件断言"文件存在"。
+ *   原来每个文件两条断言（存在 + 语法），但 readFileSync 会先抛，
+ *   所以"语法通过"严格蕴含"文件存在"—— 那 4 条"存在"是纯重复。
+ *   现在合并成一条：任一文件有问题就一次性列出全部，而不是散成 8 条 PASS。
  */
 function checkSyntax(full) {
   const src = fs.readFileSync(full, 'utf8');
   new vm.Script(src, { filename: full }); // 语法错误会在这里抛出
 }
 
+const syntaxErrors = [];
 for (const file of ELECTRON_DEPENDENT) {
-  const full = path.join(ROOT, file);
-  ok(fs.existsSync(full), file + ' 存在');
   try {
-    checkSyntax(full);
-    pass++;
-    console.log('  PASS  ' + file + ' 语法通过');
+    checkSyntax(path.join(ROOT, file));
   } catch (e) {
-    fail++;
-    console.log('  FAIL  ' + file + ' 语法错误: ' + String(e.message).slice(0, 200));
+    syntaxErrors.push(file + ': ' + String(e.message).slice(0, 200));
   }
 }
+ok(
+  syntaxErrors.length === 0,
+  'Electron 专属模块语法全部合法（' + ELECTRON_DEPENDENT.length + ' 个文件）',
+  syntaxErrors.length ? syntaxErrors : undefined
+);
 
 console.log('\n=== 3. 渲染层与 preload 不依赖 Node 模块 ===');
 
