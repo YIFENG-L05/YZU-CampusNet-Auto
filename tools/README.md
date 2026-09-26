@@ -152,7 +152,7 @@ node tools\portal-probe.js --url "http://门户地址"
 **情况 4：探针自动找不到门户，但你知道网关地址** → 手动指定网关让它扫：
 
 ```powershell
-node tools\portal-probe.js --gateway 10.130.255.254
+node tools\portal-probe.js --gateway 10.0.0.1
 ```
 
 探针默认会在"已联网但拿不到门户地址"时自动扫默认网关上的常见门户路径

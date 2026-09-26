@@ -31,7 +31,9 @@ function ok(c, label, extra) {
 }
 
 const FIX = path.join(__dirname, 'fixtures');
-// 真实抓取的输出。注意：实测这份 ipconfig 输出用的是**英文标签**（Default Gateway），
+// 真实抓取的输出**结构**（英文标签、续行、IPv6/IPv4 混排都保留），
+// 但主机名 / MAC / IP / DNS 全部换成了占位符（文档保留地址段）—— 详见 tools/README.md。
+// 注意：实测这份 ipconfig 输出用的是**英文标签**（Default Gateway），
 // 而不是中文标签 —— 这正是当初只匹配中文标签会全空的原因。
 const ipconfigRaw = fs.readFileSync(path.join(FIX, 'ipconfig-real.txt'), 'utf8').replace(/^\uFEFF/, '');
 // 这份 netsh 输出是"权限不足"的报错内容（非管理员运行时就是这样），
@@ -42,15 +44,15 @@ console.log('\n=== 1. 真实 ipconfig 输出解析（该输出用的是英文标
 const cfg = parseIpconfig(ipconfigRaw);
 
 ok(cfg.gateways.length >= 1, '取到了默认网关', cfg.gateways);
-eq(cfg.gateways[0], '10.130.255.254', '网关 = 10.130.255.254（IPv4 网关在标签行的下一行续行上）');
-ok(cfg.gateways.includes('10.130.255.254'), '网关列表包含正确的 IPv4 地址');
+eq(cfg.gateways[0], '10.0.0.1', '网关 = 10.0.0.1（IPv4 网关在标签行的下一行续行上）');
+ok(cfg.gateways.includes('10.0.0.1'), '网关列表包含正确的 IPv4 地址');
 ok(!cfg.gateways.some((g) => g.includes(':')), '网关列表里没有混进 IPv6 地址（IPv6 无法用于网关扫描）');
 
-eq(cfg.dhcpServers[0], '10.130.255.254', 'DHCP 服务器解析正确');
-ok(cfg.dnsServers.includes('10.245.1.10') && cfg.dnsServers.includes('10.245.1.11'), 'DNS 服务器解析出全部 IPv4 项', cfg.dnsServers);
+eq(cfg.dhcpServers[0], '10.0.0.1', 'DHCP 服务器解析正确');
+ok(cfg.dnsServers.includes('10.0.0.53') && cfg.dnsServers.includes('10.0.0.54'), 'DNS 服务器解析出全部 IPv4 项', cfg.dnsServers);
 ok(!cfg.dnsServers.some((d) => d.includes(':')), 'DNS 列表里没有混进 IPv6');
-eq(cfg.ipv4[0], '10.130.130.78', '本机 IPv4 地址解析正确');
-ok(cfg.ipv4.every((i) => !['255.255.128.0'].includes(i)), '没有把子网掩码误当成地址', cfg.ipv4);
+eq(cfg.ipv4[0], '10.0.0.100', '本机 IPv4 地址解析正确');
+ok(cfg.ipv4.every((i) => !['255.255.255.0'].includes(i)), '没有把子网掩码误当成地址', cfg.ipv4);
 ok(cfg.ipv6.length >= 1, 'IPv6 地址有被单独记录（不参与网关扫描）', cfg.ipv6.length);
 
 console.log('\n=== 2. 中文标签的输出也要能解析 ===');
@@ -82,7 +84,7 @@ const noGw = parseIpconfig('   IPv4 Address. . . . . . . . . . . : 10.0.0.5\r\n 
 eq(noGw.gateways, [], '没有网关时不臆造（网关和子网掩码不会被互相混淆）');
 eq(noGw.ipv4, ['10.0.0.5'], '没有网关时 IPv4 仍能正确解析');
 
-ok(isContinuationLine('                        10.130.255.254'), '续行判定：纯 IP 行是续行');
+ok(isContinuationLine('                        10.0.0.1'), '续行判定：纯 IP 行是续行');
 ok(isContinuationLine('       2001:da8::1 (Preferred)'), '续行判定：IPv6 + 括号说明是续行');
 ok(!isContinuationLine('   DNS Servers . . . . . . . . . . . : 10.0.0.1'), '续行判定：带标签的行不是续行');
 ok(!isContinuationLine(''), '续行判定：空行不是续行');

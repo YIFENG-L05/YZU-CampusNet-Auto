@@ -23,7 +23,9 @@
 const { execFileSync } = require('child_process');
 
 const RUN_KEY = 'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run';
-const VALUE_NAME = 'CampusNetAuto';
+const VALUE_NAME = 'CampusNet';
+/** 改名（CampusNetAuto → CampusNet）之前的启动项名字：开关时顺手清掉，避免留下指向旧路径的残留 */
+const LEGACY_VALUE_NAMES = ['CampusNetAuto'];
 
 /** 执行 reg.exe；不弹控制台窗口，失败不抛异常而是返回结果 */
 function runReg(args) {
@@ -83,6 +85,8 @@ function getAutoStart() {
  */
 function enableAutoStart({ exePath, appPath = null, hidden = true }) {
   const command = buildCommand({ exePath, appPath, hidden });
+  // 先清掉旧名字的启动项（同一个程序注册两次会开机启两遍）
+  for (const legacy of LEGACY_VALUE_NAMES) runReg(['delete', RUN_KEY, '/v', legacy, '/f']);
   const r = runReg(['add', RUN_KEY, '/v', VALUE_NAME, '/t', 'REG_SZ', '/d', command, '/f']);
   if (!r.ok) return { ok: false, error: r.err || 'reg add 失败' };
   return { ok: true, command };
@@ -93,6 +97,7 @@ function enableAutoStart({ exePath, appPath = null, hidden = true }) {
  * @returns {{ok:boolean, error?:string}}
  */
 function disableAutoStart() {
+  for (const legacy of LEGACY_VALUE_NAMES) runReg(['delete', RUN_KEY, '/v', legacy, '/f']);
   const r = runReg(['delete', RUN_KEY, '/v', VALUE_NAME, '/f']);
   if (r.ok) return { ok: true };
   // 值不存在时 reg delete 返回 1，视作"已经是关闭状态"

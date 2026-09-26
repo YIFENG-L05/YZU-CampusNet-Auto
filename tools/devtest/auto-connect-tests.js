@@ -12,7 +12,10 @@
 
 const path = require('path');
 const ROOT = path.join(__dirname, '..', '..');
-const { createAutoConnect, PHASE, classifyFailure, describePhase } = require(path.join(ROOT, 'src', 'main', 'auto-connect.js'));
+// 指向 Core 本体（不是 src/main/auto-connect.js 那个一行转发层）：
+// 状态机已经提取为跨平台 Core，这 97 项就是它的 Core 测试 ——
+// 未来 Android 侧不需要 src/main/ 也能跑这一套。
+const { createAutoConnect, PHASE, classifyFailure, describePhase } = require(path.join(ROOT, 'src', 'core', 'auto-connect.js'));
 const { NET_STATE, RETRY_BACKOFF_MS, RETRY_PAUSE_MS, RETRY_PAUSE_MAX_MS, POLL_INTERVAL } = require(path.join(ROOT, 'src', 'shared', 'constants.js'));
 
 let pass = 0;
@@ -121,6 +124,10 @@ function makeHarness(opts = {}) {
   eq(classifyFailure('still-offline-after-login'), 'transient', '登录后仍未联网 → transient（重试）');
   eq(classifyFailure('portal-not-found'), 'transient', '门户没找到 → transient（重试）');
   eq(classifyFailure('exception: socket hang up'), 'transient', '异常 → transient（重试）');
+  // Android 生命周期阶段新加的原因：认证跑到一半网络换人 → 这次结果作废，到新网络上重试。
+  // 必须是 transient：否则"换个 Wi-Fi"会把自动认证永久停掉（正是本阶段禁止的）。
+  eq(classifyFailure('network-changed'), 'transient', '认证期间网络切换 → transient（在新网络上重试）');
+  eq(classifyFailure('post-login-not-online'), 'transient', '门户说成功但复探未上线 → transient（重试）');
   eq(classifyFailure(undefined), 'transient', '原因缺失 → 保守地当作可重试');
 
   console.log('\n=== 2. 启动后先检测一次（需求里的"启动 → 读配置 → 检测网络"）===');

@@ -197,7 +197,7 @@ function waitMsFor(waitPings = 5) {
 
 /** 保留：将来若要写清理日志，用这个路径 */
 function defaultLogFile() {
-  return path.join(os.tmpdir(), 'CampusNetAuto-uninstall.log');
+  return path.join(os.tmpdir(), 'CampusNet-uninstall.log');
 }
 
 module.exports = {

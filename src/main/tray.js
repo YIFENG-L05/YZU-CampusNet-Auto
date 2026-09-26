@@ -9,7 +9,7 @@
  * 图标同时提供 1x 与 2x 两种分辨率，高分屏才不会糊。
  *
  * 托盘菜单按需求给的结构来：
- *   校园网助手 / 当前状态 / 立即连接 / 重新检测 / 打开主界面 / 暂停自动连接 / 退出程序
+ *   CampusNet / 当前状态 / 立即连接 / 重新检测 / 打开主界面 / 暂停自动连接 / 退出程序
  * 额外加了"开机自动连接"勾选项（Phase 4 的功能，放在最顺手的位置）。
  */
 
@@ -17,6 +17,9 @@ const path = require('path');
 const { Tray, Menu, nativeImage, app } = require('electron');
 
 const { iconPng } = require(path.join(__dirname, 'tray-icons.js'));
+
+/** 应用显示名（托盘 tooltip / 菜单首行用它，改名只改这一处） */
+const APP_NAME = 'CampusNet';
 
 /** 应用状态 → 图标状态 */
 function iconStateFor(snap) {
@@ -56,14 +59,14 @@ function iconFor(state) {
  */
 function createTray(handlers = {}) {
   const tray = new Tray(iconFor('offline'));
-  tray.setToolTip('校园网自动连接助手');
-  tray.setContextMenu(Menu.buildFromTemplate([{ label: '校园网自动连接助手', enabled: false }]));
+  tray.setToolTip(APP_NAME);
+  tray.setContextMenu(Menu.buildFromTemplate([{ label: APP_NAME, enabled: false }]));
 
   let lastSnap = null;
   let autoStartEnabled = false;
   // 自己记录这些值：Electron 的 Tray 只有 setToolTip，**没有 getToolTip**，
   // 也没有公开的取当前菜单的接口。想验证托盘状态就得自己留一份。
-  let lastTooltip = '校园网自动连接助手';
+  let lastTooltip = APP_NAME;
   let lastMenuLabels = [];
 
   /** 状态标题：托盘菜单里第一行，让用户不打开窗口也知道情况 */

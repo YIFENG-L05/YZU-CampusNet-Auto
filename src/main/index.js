@@ -24,14 +24,22 @@ const { createAutoConnectService } = require(path.join(ROOT, 'src', 'main', 'aut
 
 /**
  * 数据目录：
- *  - 打包后（正式使用）：%APPDATA%\CampusNetAuto —— 符合 Windows 惯例，卸载时整目录删除
+ *  - 打包后（正式使用）：%APPDATA%\CampusNet —— 符合 Windows 惯例，卸载时整目录删除
  *  - 开发时：留在项目内 .cache\userdata，便于反复清理和检查
  *  - 也可用环境变量 CNA_USERDATA 覆盖（自动化测试用）
+ *  - 改名（CampusNetAuto → CampusNet）时把旧目录**搬过来**，别让老用户重新配置
  */
 function resolveUserDataDir() {
   if (process.env.CNA_USERDATA) return process.env.CNA_USERDATA;
   if (!app.isPackaged) return path.join(ROOT, '.cache', 'userdata');
-  return path.join(app.getPath('appData'), 'CampusNetAuto');
+  const dir = path.join(app.getPath('appData'), 'CampusNet');
+  const legacyDir = path.join(app.getPath('appData'), 'CampusNetAuto');
+  try {
+    if (!fs.existsSync(dir) && fs.existsSync(legacyDir)) fs.renameSync(legacyDir, dir);
+  } catch {
+    // 搬不动（旧目录被占用等）就用新目录重新开始，不影响功能
+  }
+  return dir;
 }
 
 const USER_DATA_DIR = resolveUserDataDir();
