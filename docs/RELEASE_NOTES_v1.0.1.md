@@ -13,7 +13,12 @@ Android 端的可达性修复与**首次启动说明**；两端文档补齐到�
 | Windows 10 / 11 (x64) | `CampusNet-Setup-1.0.1.exe` | NSIS 安装包，**未做代码签名**（SmartScreen 可能提示，点「更多信息」→「仍要运行」） |
 | Android 8.0+ (API 26+) | `CampusNet-Android-v1.0.1-debug.apk` | **debug 签名**的测试包，**不是**正式签名版本 |
 
-校验和见 `SHA256SUMS.txt`。
+校验和（SHA256）：
+
+```
+2A62CC7487FFFA3C1F4B428CA526B1E362ECE0A8A977E55293D218540270D939  CampusNet-Setup-1.0.1.exe
+0F3B26C0AA0484792594AB8583D158C87A8D3953EED3A3DBB701BF04049E2DBB  CampusNet-Android-v1.0.1-debug.apk
+```
 
 ## 本版要点
 
