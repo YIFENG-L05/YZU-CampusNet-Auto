@@ -1,8 +1,8 @@
 {
-  "name": "campus-net-auto",
-  "productName": "YZU校园网自动登录助手",
-  "version": "1.0.0",
-  "description": "扬州大学校园网自动登录与自动重连助手（Windows 桌面应用）",
+  "name": "campusnet",
+  "productName": "CampusNet",
+  "version": "1.0.1",
+  "description": "校园网自动登录与自动重连助手（Windows 桌面应用 / Android 应用）",
   "private": false,
   "license": "MIT",
   "author": "FENG-L",
@@ -16,7 +16,7 @@
     "build": "electron-builder --win --x64",
     "build:dir": "electron-builder --win --x64 --dir",
     "test": "npm run test:windows",
-    "test:core": "node tools/devtest/module-load-tests.js && node tools/devtest/unit-tests.js && node tools/devtest/phase1-tests.js && node tools/devtest/find-portal-url-tests.js && node tools/devtest/config-store-tests.js && node tools/devtest/auto-connect-tests.js && node tools/devtest/eportal-http-tests.js && node tools/devtest/eportal-http-post-tests.js && node tools/devtest/service-api-tests.js",
+    "test:core": "node tools/devtest/module-load-tests.js && node tools/devtest/unit-tests.js && node tools/devtest/phase1-tests.js && node tools/devtest/find-portal-url-tests.js && node tools/devtest/config-store-tests.js && node tools/devtest/auto-connect-tests.js && node tools/devtest/eportal-http-tests.js && node tools/devtest/eportal-http-post-tests.js && node tools/devtest/service-api-tests.js && node tools/devtest/yzu-sso-tests.js",
     "test:windows": "npm run test:core && node tools/devtest/system-info-tests.js && node tools/devtest/uninstall-tests.js",
     "test:electron": "electron tools/devtest/electron-config-test.js && electron tools/devtest/electron-partition-test.js && electron tools/devtest/electron-config-persist-test.js --phase save && electron tools/devtest/electron-config-persist-test.js --phase load && electron tools/devtest/phase4-checks.js",
     "test:release": "npm run test:windows && npm run test:electron && electron tools/devtest/redaction-e2e.js && electron tools/devtest/electron-smoke.js",
@@ -42,9 +42,9 @@
     "electron-builder": "^26.0.12"
   },
   "build": {
-    "appId": "com.campusnetauto.yzu",
-    "productName": "YZU校园网自动登录助手",
-    "copyright": "Copyright © 2026 YZU-CampusNet-Auto",
+    "appId": "com.campusnet.auto",
+    "productName": "CampusNet",
+    "copyright": "Copyright © 2026 CampusNet",
     "directories": {
       "output": "dist",
       "buildResources": "."
@@ -65,8 +65,8 @@
         }
       ],
       "icon": "assets/icon.ico",
-      "executableName": "CampusNetAuto",
-      "artifactName": "YZU-CampusNet-Auto-Setup-${version}.exe"
+      "executableName": "CampusNet",
+      "artifactName": "CampusNet-Setup-${version}.exe"
     },
     "nsis": {
       "oneClick": false,
@@ -74,7 +74,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "YZU校园网自动登录助手",
+      "shortcutName": "CampusNet",
       "deleteAppDataOnUninstall": false,
       "runAfterFinish": true,
       "include": "build/installer.nsh"
