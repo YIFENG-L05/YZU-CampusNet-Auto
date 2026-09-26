@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  应用主题：**浅色**系统工具风格。
+
+  ⚠ 关于系统栏适配（用户要求 §2.2）：
+     targetSdk 35+ 在 Android 15+ 上是**强制 edge-to-edge** 的，应用无法退出；
+     所以"顶部内容不进入状态栏"必须靠 **WindowInsets** 处理，
+     不能靠固定 margin 顶开（那样换机型/换状态栏高度就会错位）。
+     具体处理在 MainActivity 里：给页面容器加 top inset、给底部 Dock 加 bottom inset。
+     这里只负责：透明系统栏 + 浅色背景 + **深色图标**（浅色 UI 必须是深色图标）。
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.CampusNet" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/bg_base</item>
+        <item name="android:colorBackground">@color/bg_base</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_tertiary</item>
+
+        <!-- 系统栏：透明 + 浅色 UI 用深色图标 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:editTextColor">@color/text_primary</item>
+        <item name="android:colorControlNormal">@color/text_tertiary</item>
+        <item name="android:colorControlActivated">@color/accent</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:windowAnimationStyle">@style/Anim.CampusNet</item>
+    </style>
+
+    <!-- 页面切换动画：250~350ms -->
+    <style name="Anim.CampusNet" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/page_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/page_hold</item>
+        <item name="android:activityCloseEnterAnimation">@anim/page_hold</item>
+        <item name="android:activityCloseExitAnimation">@anim/page_out</item>
+    </style>
+
+    <!-- ⚠ AAPT 对 "Text.Xxx" 会去找父样式 "Text"，所以先声明空命名空间 -->
+    <style name="Text" parent="" />
+    <style name="Card" parent="" />
+
+    <style name="Text.SectionTitle">
+        <item name="android:textColor">@color/text_tertiary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.06</item>
+    </style>
+
+    <style name="Text.RowTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Text.RowSubtitle">
+        <item name="android:textColor">@color/text_tertiary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+
+    <style name="Text.RowValue">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- 大标题（二级页面/首页顶部） -->
+    <style name="Text.PageTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 白卡：大圆角 + 极浅边框（不用实时模糊、不用大面积阴影） -->
+    <style name="Card.Glass">
+        <item name="android:background">@drawable/bg_glass_card</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+</resources>

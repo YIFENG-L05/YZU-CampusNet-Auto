@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  新一代 UI 的文案（与旧的 strings.xml **并存**，不改旧键，避免动到已实现的功能）。
+
+  文案原则（用户要求）：
+    · 只说真实状态；没有数据就说"暂无数据"，绝不编造
+    · 错误说人话，不出现 HTTP 302 / statusCode / 异常类名
+    · 不承诺做不到的事（例如"保证不断网"）
+-->
+<resources>
+
+    <!-- ── 应用与导航（用户要求：删掉"提示类语言"，定位语已移除）── -->
+    <string name="ui_app_name">CampusNet</string>
+    <string name="ui_nav_home">首页</string>
+    <string name="ui_nav_logs">日志</string>
+    <string name="ui_nav_settings">设置</string>
+
+    <!-- ── 自动连接开关 ── -->
+    <string name="ui_toggle_title">自动连接</string>
+    <string name="ui_toggle_on">自动连接已开启</string>
+    <string name="ui_toggle_off">自动连接已关闭</string>
+
+    <!-- ── 首页状态卡 ── -->
+    <string name="ui_state_service_stopped">服务已停止</string>
+    <string name="ui_state_service_stopped_desc">自动认证服务当前没有运行。开启自动连接后会常驻后台。</string>
+    <string name="ui_state_waiting_network">等待网络</string>
+    <string name="ui_state_waiting_network_desc">当前没有可用网络，网络恢复后会自动检测。</string>
+    <string name="ui_state_checking">正在检测网络</string>
+    <string name="ui_state_checking_desc">正在确认当前网络是否需要认证。</string>
+    <string name="ui_state_campus_detected">检测到校园网络</string>
+    <string name="ui_state_campus_detected_desc">已识别校园 Wi-Fi，正在判断是否需要认证。</string>
+    <string name="ui_state_authenticating">认证中</string>
+    <string name="ui_state_authenticating_desc">正在通过校园统一身份认证完成登录。</string>
+    <string name="ui_state_authenticated">已认证</string>
+    <string name="ui_state_authenticated_desc">校园网认证已通过。</string>
+    <string name="ui_state_online">网络在线</string>
+    <string name="ui_state_online_desc">当前网络可以正常访问互联网。</string>
+    <string name="ui_state_not_campus">非校园 Wi-Fi</string>
+    <string name="ui_state_not_campus_desc">当前连接的不是校园 Wi-Fi，不会做任何认证动作。</string>
+    <string name="ui_state_permission">权限不足</string>
+    <string name="ui_state_permission_desc">读不到 Wi-Fi 名称时不会自动认证，也不会把账号发给认不出的网络。</string>
+    <string name="ui_state_no_credentials">缺少账号密码</string>
+    <string name="ui_state_no_credentials_desc">还没有配置校园网账号，无法认证。</string>
+    <string name="ui_state_auth_failed">认证失败</string>
+    <string name="ui_state_auth_failed_desc">校园认证服务器暂时没有接受请求，稍后会自动重试。</string>
+    <string name="ui_state_service_error">服务运行异常</string>
+    <string name="ui_state_service_error_desc">服务没有按预期启动或已停止，可以尝试重新开启自动连接。</string>
+
+    <!-- ── 首页卡片标题 ── -->
+    <string name="ui_section_auth_info">认证信息</string>
+    <string name="ui_section_network_info">网络信息</string>
+    <string name="ui_section_graph">链路状态</string>
+    <string name="ui_section_flow">认证流程</string>
+    <string name="ui_section_stability">网络稳定性</string>
+    <string name="ui_section_recent">最近活动</string>
+    <string name="ui_section_latency">延迟</string>
+
+    <string name="ui_label_account">账号</string>
+    <string name="ui_label_service">认证服务</string>
+    <string name="ui_label_last_login">最近认证</string>
+    <string name="ui_label_last_error">最近错误</string>
+    <string name="ui_label_wifi">Wi-Fi</string>
+    <string name="ui_label_campus">校园网</string>
+    <string name="ui_label_portal">门户</string>
+    <string name="ui_label_state">网络状态</string>
+
+    <string name="ui_value_none">暂无数据</string>
+    <string name="ui_value_waiting">等待数据</string>
+    <string name="ui_value_not_detected">未检测</string>
+    <string name="ui_value_unknown">未知</string>
+    <string name="ui_value_configured">已配置</string>
+    <string name="ui_value_not_configured">未配置</string>
+    <string name="ui_latency_unavailable">延迟\n暂无数据</string>
+    <string name="ui_latency_note">当前版本只在探测时记录"通/不通"，没有测量往返耗时，因此不显示毫秒数。</string>
+    <string name="ui_stability_note">只显示真实记录到的时间范围。</string>
+    <string name="ui_stability_empty">还没有足够的历史记录</string>
+
+    <!-- ── 链路节点 ── -->
+    <string name="ui_node_device">本机</string>
+    <string name="ui_node_wifi">校园 Wi-Fi</string>
+    <string name="ui_node_portal">认证门户</string>
+    <string name="ui_node_internet">互联网</string>
+
+    <!-- ── 认证阶段（真实阶段名）── -->
+    <string name="ui_stage_check">检测网络</string>
+    <string name="ui_stage_portal">发现校园门户</string>
+    <string name="ui_stage_sso">YZU SSO</string>
+    <string name="ui_stage_verify">验证身份</string>
+    <string name="ui_stage_bind">绑定服务</string>
+    <string name="ui_stage_online">ONLINE</string>
+    <string name="ui_stage_waiting">等待</string>
+    <string name="ui_stage_current">当前步骤</string>
+    <string name="ui_stage_done">已完成</string>
+
+    <!-- ── 首页按钮 ── -->
+    <string name="ui_btn_check_now">立即检查</string>
+    <string name="ui_btn_auth_now">立即认证</string>
+    <string name="ui_btn_view_logs">查看日志</string>
+    <string name="ui_btn_settings">设置</string>
+    <string name="ui_btn_dismiss">知道了</string>
+
+    <!-- ── 连接说明 / 运行准备度（弹窗已删除，这些文案现在只用在设置里） ── -->
+    <string name="ui_enable_intro">CampusNet 只会在符合条件时尝试自动认证：</string>
+    <string name="ui_enable_yes_1">当前连接校园 Wi-Fi</string>
+    <string name="ui_enable_yes_2">当前网络符合校园网规则</string>
+    <string name="ui_enable_yes_3">网络处于需要认证状态</string>
+    <string name="ui_enable_yes_4">已配置账号和密码</string>
+    <string name="ui_enable_yes_5">自动认证服务正在运行</string>
+    <string name="ui_enable_no_title">以下情况不会自动认证：</string>
+    <string name="ui_enable_no_1">未连接 Wi-Fi</string>
+    <string name="ui_enable_no_2">非校园 Wi-Fi</string>
+    <string name="ui_enable_no_3">网络已经正常联网</string>
+    <string name="ui_enable_no_4">用户主动停止服务</string>
+    <string name="ui_enable_no_5">账号密码未配置</string>
+    <string name="ui_enable_no_6">必要系统权限不足</string>
+    <string name="ui_enable_readiness">运行准备度</string>
+    <string name="ui_enable_need_more">还有必要条件没有满足：</string>
+
+    <!-- ── 权限 / 准备度项 ── -->
+    <string name="ui_ready_fgs_title">后台运行</string>
+    <string name="ui_ready_fgs_why">用于保持认证服务在前台运行</string>
+    <string name="ui_ready_wifi_title">Wi-Fi / 附近设备</string>
+    <string name="ui_ready_wifi_why">用于识别当前连接的是不是校园 Wi-Fi</string>
+    <string name="ui_ready_location_title">定位服务</string>
+    <string name="ui_ready_location_why">实测：系统只在定位开启时才返回 Wi-Fi 名称</string>
+    <string name="ui_ready_battery_title">不受电池优化限制</string>
+    <string name="ui_ready_battery_why">用于减少系统在息屏后冻结后台服务</string>
+    <string name="ui_ready_autostart_title">自启动</string>
+    <string name="ui_ready_autostart_why">用于手机重启后恢复服务</string>
+    <string name="ui_ready_allow">已允许</string>
+    <string name="ui_ready_missing">未开启</string>
+    <string name="ui_ready_grant">去授权</string>
+    <string name="ui_ready_go_settings">去设置</string>
+    <string name="ui_ready_unverifiable">系统未提供查询接口，需要你自己确认</string>
+    <string name="ui_ready_no_page">这台手机没有公开的自启动设置入口，已打开应用详情页。</string>
+    <!-- 运行准备度页的两段（必需 / 建议）：原「权限管理」页已删除，"防止后台被杀"并入建议 -->
+    <string name="ui_ready_section_required">必需</string>
+    <string name="ui_ready_section_advisory">建议</string>
+    <string name="ui_ready_service_row">后台运行 / 后台活动</string>
+
+    <!-- ── 校园 Wi-Fi 自动连接（运行准备度页里的独立卡片）── -->
+    <string name="ui_campus_wifi_title">校园 Wi-Fi 自动连接</string>
+    <string name="ui_campus_wifi_state">状态</string>
+    <string name="ui_campus_wifi_allowed">已允许</string>
+    <string name="ui_campus_wifi_not_allowed">未允许（默认关闭）</string>
+    <string name="ui_campus_wifi_allow">允许</string>
+    <string name="ui_campus_wifi_disable">关闭</string>
+    <string name="ui_campus_wifi_row_suggested">已向系统建议</string>
+    <string name="ui_campus_wifi_row_connected">已连接校园 Wi-Fi</string>
+    <string name="ui_campus_wifi_row_last_decision">最近一次判断</string>
+    <string name="ui_campus_wifi_not_run">尚未运行</string>
+    <string name="ui_campus_wifi_none">无</string>
+    <string name="ui_campus_wifi_not_suggested">尚未建议</string>
+    <string name="ui_campus_wifi_yes">是</string>
+    <string name="ui_campus_wifi_rule_only_exact">注意：当前校园 Wi-Fi 规则不是"精确匹配"（是前缀 / 正则）。本次只支持精确匹配的自动连接，前缀 / 正则规则下不会主动请求连接。</string>
+    <string name="ui_campus_wifi_os_blocked">系统未允许本应用建议网络。需要你在系统设置里放行；应用不会伪造"已允许"。</string>
+    <string name="ui_campus_wifi_go_system">打开系统网络设置</string>
+    <string name="ui_campus_wifi_note">用于在没有其他 Wi-Fi、仅使用移动数据时，发现附近的校园 Wi-Fi 并向系统请求连接；是否连接、何时连接由系统决定，应用不会强制切换、也不会打开你已经关闭的 Wi-Fi。</string>
+    <string name="ui_campus_wifi_state_now">当前状态</string>
+    <string name="ui_campus_wifi_waiting_system">等待系统连接</string>
+    <string name="ui_campus_wifi_state_unknown">系统状态未知</string>
+    <string name="ui_campus_wifi_allowed_idle">已允许（当前条件不满足）</string>
+    <string name="ui_campus_wifi_note_short">只向系统**建议**连接；是否连接由系统决定。完整规则见「使用规则」。</string>
+    <string name="ui_campus_wifi_on_toast">已允许：使用移动数据时会向系统建议校园 Wi-Fi</string>
+    <string name="ui_campus_wifi_off_toast">已关闭：不再发现、不再请求连接校园 Wi-Fi</string>
+
+    <!-- ── 使用规则页（设置里的完整版；首次启动弹窗只放精简版）── -->
+    <string name="ui_rules_sec_connect">一、自动连接逻辑</string>
+    <string name="ui_rules_sec_auth">二、自动认证逻辑</string>
+    <string name="ui_rules_auth_body">只有在**已经连上校园 Wi-Fi**、且状态机判定"当前需要认证"时，才会去认证。\n\n· 认证通过后会**复探确认**真的能上网，才算成功（不会因为 HTTP 200 就报成功）；\n· 失败会按退避阶梯重试：5 秒 → 10 秒 → 30 秒 → 暂停 5 分钟（逐次翻倍，最长 30 分钟）；\n· **账号或密码错误会立刻停手**并提示，不会拿错误密码反复去撞门户（避免触发学校风控或验证码）；\n· 未配置账号密码时不会认证。</string>
+    <string name="ui_rules_sec_switch">三、Wi-Fi 切换规则</string>
+    <string name="ui_rules_switch_body">· CampusNet **只向 Android 系统"建议"连接校园 Wi-Fi**，是否连接、何时连接由系统决定；\n· 当前**已经连着其他 Wi-Fi** 时：不请求连接，并撤回已经提交给系统的校园网建议（不抢你的网）；\n· 你**关掉 Wi-Fi 开关**时：什么都不做，也不会替你打开 Wi-Fi；\n· 连着 Wi-Fi 但暂时读不到名字（正在关联中）：保持现状，既不请求也不撤回，避免刚连上就断开；\n· 首次使用系统可能需要你在系统界面**确认一次**允许本应用建议网络。</string>
+    <string name="ui_rules_sec_android">四、Android 系统限制</string>
+    <string name="ui_rules_android_body">· 「自动连接已开启」**不等于**「已连接校园 Wi-Fi」，更**不等于**「已认证」；\n· Android 10+ 只提供"建议连接"，**没有"强制切换 Wi-Fi"的公开接口**，所以无法保证必然连上；\n· 应用**不能**打开你关闭的 Wi-Fi，也不能绕过厂商后台策略；\n· 部分厂商 ROM 会限制后台运行与自启动，这不是应用能绕过的（可在「运行准备度」里按提示加白名单）；\n· 部分系统状态**没有公开查询接口**（例如自启动开关），应用会如实显示"系统无法直接读取此状态"，不会假装已开启。</string>
+    <string name="ui_rules_sec_compat">五、校园网兼容性</string>
+    <string name="ui_rules_compat_body">**已验证的认证链路**：Ruijie ePortal 门户拦截 → CAS / 统一身份认证 SSO → 服务选择 / 服务绑定，\n在真实校园网 YZU-WLAN 上完成验证（Windows 与 Android 均实测）。\n\n**暂未适配或未验证**：Srun / 深澜、Dr.COM、其他校园网认证平台，以及与当前 CAS SSO 流程不同的锐捷部署方式。\n\n⚠ 不同学校即使使用同一厂商的产品，认证页面、SSO 参数、加密方式与服务选择流程也可能完全不同，\n因此**不保证**在其他学校可以直接使用。</string>
+    <string name="ui_rules_sec_trouble">六、没有自动连接时怎么排查</string>
+    <string name="ui_rules_trouble_body">依次检查：\n\n① 首页「自动连接」是否开着；\n② 「设置 → 运行准备度」里必需项是否都满足（Wi-Fi/位置权限、定位服务、账号与密码）；\n③ 「校园 Wi-Fi 自动连接」是否已允许；\n④ 校园 Wi-Fi 规则是否填的是**精确 SSID**（前缀 / 正则规则当前不会自动请求连接）；\n⑤ 手机 Wi-Fi 开关是否开着、是否**没有**连着别的 Wi-Fi；\n⑥ 系统是否允许本应用建议网络（被禁用时会提示，并提供去系统设置的入口）；\n⑦ 「设置 → 使用日志」里看**最后一次判断的原因**（会写明为什么没动作）。</string>
+
+    <!-- ══ 首次启动说明（只在第一次打开时显示；只讲"什么时候连/不连/怎么用"）══ -->
+    <string name="ui_first_title">校园 Wi-Fi 自动连接说明</string>
+    <string name="ui_first_intro">CampusNet 是校园网自动连接与认证工具。下面说明它在什么情况下会尝试连接校园 Wi-Fi、什么情况下不会，以及你应该怎么用。读完才能继续（点「我已阅读并继续」）。</string>
+
+    <string name="ui_first_when_yes_title">一、什么时候可以自动连接</string>
+    <string name="ui_first_when_yes_body">开启「自动连接」后，只有同时满足下面这些**实际条件**，CampusNet 才会尝试连接校园 Wi-Fi：\n\n① 当前**没有连接其他 Wi-Fi**；\n② 当前正在使用**移动数据**，或没有可用的 Wi-Fi；\n③ 手机的 **Wi-Fi 开关是开着的**；\n④ 已授予本应用所需的 **Wi-Fi / 位置权限**；\n⑤ 已配置**校园 Wi-Fi 规则**（精确匹配某个 SSID，例如 YZU-WLAN）；\n⑥ 附近**存在符合规则的校园 Wi-Fi**。</string>
+    <string name="ui_first_how_connect">满足上面的条件后：CampusNet 会向 Android 系统**建议**连接校园 Wi-Fi（Android 10+ 的 Wi-Fi 建议机制）。**最终是否连接、什么时候连接，由 Android 系统决定**。连接成功之后，CampusNet 才会进入已有的校园网认证流程（门户探测 → 统一身份认证 → 服务绑定 → 确认联网）。</string>
+
+    <string name="ui_first_when_no_title">二、什么时候不会自动连接</string>
+    <string name="ui_first_when_no_body">① 当前**已经连着其他 Wi-Fi**（家里 / 热点 / 公司 / 酒店等）；\n② 你正在正常使用那个 Wi-Fi —— CampusNet 不会把它抢走；\n③ 手机的 **Wi-Fi 开关是关着的**；\n④ 首页的「**自动连接**」开关是关着的；\n⑤ 附近**没有符合校园 Wi-Fi 规则**的网络；\n⑥ Android 系统**没有允许**本应用建议网络（需要在系统设置里放行）；\n⑦ 系统或手机厂商的后台/省电策略限制了相关功能。</string>
+    <string name="ui_first_never">CampusNet **不会强制打开你关掉的 Wi-Fi**，也**不会强制切换你正在使用的其他 Wi-Fi**。</string>
+
+    <string name="ui_first_steps_title">三、怎么使用</string>
+    <string name="ui_first_steps_body">① 打开首页的「自动连接」；\n② 按「设置 → 运行准备度」里的提示补齐必要项（Wi-Fi/位置权限、通知、后台运行、电池优化、校园 Wi-Fi 自动连接）；\n③ 在「设置 → 账号与认证」里填校园网账号、密码，选认证服务，并填**校园 Wi-Fi 规则**；\n④ 不要连其他 Wi-Fi，使用移动数据；\n⑤ 进入校园 Wi-Fi 覆盖范围；\n⑥ 等待 Android 系统连接校园 Wi-Fi；\n⑦ CampusNet 检测到校园 Wi-Fi 后自动进入认证流程。\n\n**如果没有自动连接**：进入「设置 → 运行准备度」逐项检查上面的第 ② 步，然后看「设置 → 使用日志」里最后一次判断的原因。</string>
+
+    <string name="ui_first_states_title">四、三个状态要分清</string>
+    <string name="ui_first_states_body">「自动连接已开启」**不等于**「已经连接校园 Wi-Fi」，也**不等于**「已经完成校园网认证」。它们是这样一步一步来的：\n\n自动连接已开启\n　↓\n向 Android 系统建议校园 Wi-Fi\n　↓\nAndroid 系统决定是否连接\n　↓\n连接校园 Wi-Fi\n　↓\nCampusNet 执行认证\n　↓\n认证完成</string>
+    <string name="ui_first_footer_hint">隐私声明、使用规则、开源软件声明与第三方组件都在「设置」里，不在这里重复。</string>
+    <string name="ui_first_read_required">请阅读完整内容</string>
+    <string name="ui_first_read_done">我已阅读并继续</string>
+
+    <!-- ── 后台保护提示 ── -->
+    <string name="ui_protect_title">让自动连接更稳定</string>
+    <string name="ui_protect_desc">部分手机厂商会限制后台应用。建议开启：</string>
+    <string name="ui_protect_item_1">自启动</string>
+    <string name="ui_protect_item_2">后台运行</string>
+    <string name="ui_protect_item_3">不受电池优化限制</string>
+    <string name="ui_protect_go">去设置</string>
+    <string name="ui_protect_later">稍后处理</string>
+
+    <!-- ── 日志页 ── -->
+    <string name="ui_logs_title">使用日志</string>
+    <string name="ui_logs_filter_all">全部</string>
+    <string name="ui_logs_filter_auth">认证</string>
+    <string name="ui_logs_filter_network">网络</string>
+    <string name="ui_logs_filter_service">服务</string>
+    <string name="ui_logs_filter_error">错误</string>
+    <string name="ui_logs_empty">还没有日志</string>
+
+    <!-- ── 设置页 ── -->
+    <string name="ui_settings_account_group">账号与认证</string>
+    <string name="ui_settings_account">账号</string>
+    <string name="ui_settings_password">密码</string>
+    <string name="ui_settings_credential_edit">账号与密码…</string>
+    <string name="ui_settings_credential_note">在独立页面里设置；密码只写入系统安全存储，界面不回显。</string>
+    <string name="ui_settings_auth_group">自动连接</string>
+    <string name="ui_settings_auto_connect">自动连接</string>
+    <string name="ui_settings_boot">开机自动运行</string>
+    <string name="ui_settings_boot_note">开机自动运行由系统的自启动开关决定</string>
+    <string name="ui_settings_background_group">后台运行</string>
+    <string name="ui_settings_bg_status">后台运行状态</string>
+    <string name="ui_settings_autostart">自启动</string>
+    <string name="ui_settings_battery">电池优化</string>
+    <string name="ui_settings_diag_group">诊断</string>
+    <string name="ui_settings_selfcheck">运行自检</string>
+    <string name="ui_settings_network_test">网络测试</string>
+    <string name="ui_settings_logs">使用日志</string>
+    <string name="ui_settings_about_group">关于</string>
+    <string name="ui_settings_privacy">隐私声明</string>
+    <string name="ui_settings_terms">用户协议</string>
+    <string name="ui_settings_sdk">第三方 SDK 公示</string>
+    <string name="ui_settings_opensource">开源软件声明</string>
+    <string name="ui_settings_version">版本</string>
+    <string name="ui_settings_running">运行中</string>
+    <string name="ui_settings_stopped">未运行</string>
+    <string name="ui_settings_allowed">已允许</string>
+    <string name="ui_settings_not_allowed">未开启</string>
+
+    <!-- ── 文档页 ── -->
+    <string name="ui_doc_privacy_title">隐私声明</string>
+    <string name="ui_doc_terms_title">用户协议</string>
+    <string name="ui_doc_sdk_title">第三方 SDK 公示</string>
+    <string name="ui_doc_opensource_title">开源软件声明</string>
+    <string name="ui_doc_about_title">关于 CampusNet</string>
+    <string name="ui_doc_close">关闭</string>
+
+    <!-- ── 网络测试 ── -->
+    <string name="ui_test_running">正在测试…</string>
+    <string name="ui_test_title">网络测试</string>
+    <string name="ui_test_close">关闭</string>
+
+    <!-- ══ 本轮（信息架构收口）新增 ══ -->
+
+    <string name="ui_back">返回</string>
+
+    <!-- 首页收敛后的入口 -->
+    <string name="ui_entry_network">网络状态</string>
+    <string name="ui_entry_network_sub">Wi-Fi、校园网、门户、互联网</string>
+    <string name="ui_entry_auth">认证状态</string>
+    <string name="ui_entry_auth_sub">账号、认证服务、最近认证结果</string>
+
+    <!-- 二级页面标题 -->
+    <string name="ui_page_network">网络状态</string>
+    <string name="ui_page_auth">认证状态</string>
+    <string name="ui_page_account">账号与认证</string>
+
+    <!-- 网络状态页 -->
+    <string name="ui_net_wifi_label">Wi-Fi</string>
+    <string name="ui_net_campus_label">校园网络</string>
+    <string name="ui_net_portal_label">Portal</string>
+    <string name="ui_net_internet_label">Internet</string>
+    <string name="ui_net_last_check">最近检查</string>
+    <string name="ui_net_campus_yes">已识别</string>
+    <string name="ui_net_campus_no">不是校园网</string>
+    <string name="ui_net_portal_passed">已通过</string>
+    <string name="ui_net_portal_needed">需要认证</string>
+    <string name="ui_net_internet_online">在线</string>
+    <string name="ui_net_internet_offline">未联网</string>
+    <string name="ui_net_unavailable">暂无数据</string>
+
+    <!-- 认证状态页 -->
+    <string name="ui_auth_account_label">账号</string>
+    <string name="ui_auth_service_label">认证服务</string>
+    <string name="ui_auth_last_label">最近认证</string>
+    <string name="ui_auth_result_label">结果</string>
+    <string name="ui_auth_error_label">最近错误</string>
+    <string name="ui_auth_result_ok">认证成功</string>
+    <string name="ui_auth_result_fail">认证失败</string>
+    <string name="ui_auth_no_error">无</string>
+    <string name="ui_auth_masked">未配置</string>
+
+    <!-- 设置页：**不要副标题**（用户要求），每行只有标题 + 当前值 + 箭头 -->
+
+    <!-- 账号与认证页 -->
+    <string name="ui_account_section">账号</string>
+    <string name="ui_account_label">校园网账号</string>
+    <string name="ui_account_hint">学号 / 工号</string>
+    <string name="ui_password_section">密码</string>
+    <string name="ui_password_label">密码</string>
+    <string name="ui_password_hint">校园网密码</string>
+    <string name="ui_password_show">显示密码</string>
+    <string name="ui_password_shown">已显示</string>
+    <string name="ui_password_hidden">已隐藏</string>
+    <string name="ui_service_section">认证服务</string>
+    <string name="ui_service_hint">选择认证时使用的运营商服务（不确定就保持默认）</string>
+    <string name="ui_service_fetch">读取门户服务列表</string>
+    <string name="ui_service_loading">正在读取…</string>
+    <string name="ui_rule_section">校园 Wi-Fi 规则</string>
+    <string name="ui_rule_exact">精确匹配</string>
+    <string name="ui_rule_prefix">前缀匹配</string>
+    <string name="ui_rule_regex">正则匹配</string>
+    <string name="ui_rule_value_hint">例如 YZU-WLAN</string>
+    <string name="ui_rule_use_current">使用当前 Wi-Fi 名称</string>
+    <string name="ui_account_save">保存</string>
+    <string name="ui_account_saved">已保存</string>
+    <string name="ui_account_credentials_present">已配置账号（密码不会回显）</string>
+    <string name="ui_account_credentials_missing">尚未配置账号密码</string>
+
+    <!-- ══ 内联账号表单 + 认证服务四选一 ══ -->
+    <string name="ui_service_school">学校</string>
+    <string name="ui_service_unicom">联通</string>
+    <string name="ui_service_mobile">移动</string>
+    <string name="ui_service_telecom">电信</string>
+    <string name="ui_service_auto_note">选择认证时使用的运营商服务；选错会出现"用户不允许使用本服务"。</string>
+    <string name="ui_account_collapse">收起</string>
+    <!-- 首页按钮文字（按钮展开后显示） -->
+    <string name="ui_toggle_label">自动连接</string>
+
+    <!-- ══ 本轮：状态收进设置 + 连接说明 / 运行准备度移入设置 + 必要权限闸门 ══ -->
+
+    <!-- 设置页新增的行（**无副标题**，用户要求） -->
+    <string name="ui_settings_status">网络与认证状态</string>
+    <string name="ui_settings_enable_notes">使用规则</string>
+    <string name="ui_page_status">网络与认证状态</string>
+
+    <!-- 必要权限不足时的闸门（自动连接会被终止，直到权限开启） -->
+    <string name="ui_gate_perm_title">必要权限未开启</string>
+    <string name="ui_gate_perm_message">自动连接需要下面的权限 / 系统开关，现在还没有开启：\n\n%1$s\n\n已暂停自动连接。开启这些权限后，可以再点一次「自动连接」。</string>
+    <string name="ui_gate_account_title">还缺账号与密码</string>
+    <string name="ui_gate_account_message">自动连接需要先填好校园网账号与密码。\n\n已暂停自动连接，配置好之后可以再点一次「自动连接」。</string>
+    <string name="ui_gate_go_permission">去设置开启</string>
+    <string name="ui_gate_go_account">去填写账号</string>
+    <string name="ui_gate_later">暂不开启</string>
+    <string name="ui_gate_account_toast">请展开「账号与认证」填写账号与密码</string>
+    <string name="ui_gate_terminated">必要权限不足，已终止自动连接</string>
+    <string name="ui_gate_blocked">必要权限不足，未开启自动连接</string>
+</resources>

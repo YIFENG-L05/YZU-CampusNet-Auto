@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  网络安全配置。
+
+  ⚠ 为什么必须允许明文 HTTP（这是 Windows 版根本不会遇到的问题）：
+    Android 9（API 28）起**默认禁止 cleartext HTTP**。而本应用的两个关键通信对象都是 HTTP：
+      · 门户探测点：http://www.msftconnecttest.com/connecttest.txt 等
+      · 校园网门户：锐捷 ePortal，实测是 http://<内网IP>/eportal/...（没有 HTTPS）
+    不允许明文的话，探测会直接抛
+      "CLEARTEXT communication ... not permitted by network security policy"，
+    整个"是否需要认证"的判断就没法做。
+
+  ⚠ 关于安全性的取舍（写清楚，别让后来人以为这是随手开的）：
+    · 允许明文是**必要的**，不是图省事：门户本身只提供 HTTP
+    · 我们**只**把校园网账号密码发到"当前校园网门户"这个地址，且只在内网
+    · 不向任何公网地址发送凭据（探测点只用于判断通不通，不带任何凭据）
+    · 这与 Windows 版的行为一致（Windows 版同样是用 HTTP 打门户接口）
+
+  如果将来目标门户支持 HTTPS，应当把 base-config 改回 cleartextTrafficPermitted="false"
+  并只放行具体域名。
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

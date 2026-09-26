@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  视觉系统（**Light UI**：白 / 浅灰 + 低饱和蓝灰）。
+
+  用户要求：
+    · 页面主体 #F7F8FA，卡片纯白，文字深灰（不要纯黑），边框非常浅
+    · 保留低饱和与一点点轻玻璃感，但**不要**黑色科技风 / 霓虹 / 大面积 Glow
+    · 不新增大面积阴影，层次靠"白卡 + 极浅边框 + 大留白"
+
+  ⚠ 颜色名保持不变（大量布局与自定义 View 都在引用），只改取值。
+-->
+<resources>
+
+    <!-- ── 背景层 ── -->
+    <color name="bg_deep">#F7F8FA</color>       <!-- 页面主体（浅灰白） -->
+    <color name="bg_base">#F7F8FA</color>       <!-- 与 bg_deep 同色：保留旧名以免改动布局 -->
+    <color name="bg_raised">#FFFFFF</color>     <!-- 抬升面（顶部栏/覆盖层卡片） -->
+
+    <!-- ── 卡片（白底 + 极浅边框；"玻璃"变成很轻的半透明白）── -->
+    <color name="glass_fill">#FFFFFF</color>
+    <color name="glass_fill_soft">#F2F4F8</color>
+    <color name="glass_fill_strong">#FFFFFF</color>
+    <color name="glass_stroke">#E8EBF0</color>
+    <color name="glass_stroke_soft">#EFF2F6</color>
+
+    <!-- ── 文字层级（深灰，不用纯黑）── -->
+    <color name="text_primary">#1F2430</color>
+    <color name="text_secondary">#5A6472</color>
+    <color name="text_tertiary">#8A94A3</color>
+    <color name="text_disabled">#B6BEC9</color>
+
+    <!-- ── 主色：低饱和蓝 ── -->
+    <color name="accent">#4C86C6</color>
+    <color name="accent_soft">#7BA8D6</color>
+    <color name="accent_glow">#334C86C6</color>
+    <color name="accent_dim">#1A4C86C6</color>   <!-- 约 10% 主色：选中态底色 -->
+
+    <!-- ── 辅助：低饱和紫（极少量点缀）── -->
+    <color name="accent_violet">#8B84C4</color>
+    <color name="accent_violet_dim">#1A8B84C4</color>
+
+    <!-- ── 语义色（低饱和，白底上依然清晰）── -->
+    <color name="ok">#3E9B73</color>
+    <color name="ok_dim">#1A3E9B73</color>
+    <color name="warn">#B98A3C</color>
+    <color name="warn_dim">#1AB98A3C</color>
+    <color name="danger">#C0555A</color>
+    <color name="danger_dim">#1AC0555A</color>
+    <color name="idle">#C3CAD4</color>          <!-- 圆环/未激活态：浅灰 -->
+
+    <!-- ── 分隔线与导航 ── -->
+    <color name="divider">#EDF0F4</color>
+    <color name="nav_bar">#FFFFFF</color>
+    <color name="nav_selected">#4C86C6</color>
+    <color name="nav_unselected">#8A94A3</color>
+
+    <color name="transparent">#00000000</color>
+</resources>

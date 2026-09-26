@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      权限只加**本阶段（第三阶段：网络发现与检测）确实需要**的。
+      刻意**没有**加：FOREGROUND_SERVICE / POST_NOTIFICATIONS（后台机制阶段）、
+      BOOT_COMPLETED（同上）、任何存储权限、无障碍、通知监听。
+    -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 读 Wi-Fi 状态 + 提交网络建议 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <!--
+      读 SSID 需要的权限。
+
+      ⚠ 这一段是**真机实测**结论（Android 17 / API 37，自检第 5 项可当场复现），
+        别照文档想当然 —— 官方文档说 API 33+ 给 NEARBY_WIFI_DEVICES 就能读 SSID，
+        实测**读不到**：
+          · 只给 NEARBY_WIFI_DEVICES            → transportInfo 与旧接口都返回 <unknown ssid>
+          · 再给上 ACCESS_FINE_LOCATION          → 旧接口返回真实值 "YZU-WLAN"
+        由此：
+          1. SSID 的真实值必须有 ACCESS_FINE_LOCATION（所以**不能**写 maxSdkVersion=32，
+             早期版本写过，结果 Android 13+ 直接读不到）
+          2. `NetworkCapabilities.transportInfo` 这条"推荐路径"在本机被脱敏，
+             反而是**已废弃**的 `WifiManager.connectionInfo` 给出真实值
+             → 代码里两条路都试，谁给真实值用谁（见 AndroidWifiState.readSsid）
+
+      ⚠ 隐私代价（产品取舍，不是技术顺手）：
+        读 SSID 需要用户授予定位权限，Android 对话框会明写"定位"，用户可能拒绝。
+        拒绝的后果：无法识别校园 Wi-Fi，只能退化成"连上任意 Wi-Fi 都去探测门户"，
+        那样有把凭据发给陌生门户的风险 —— 所以拒绝时应当**明确告知并停止自动认证**，
+        而不是降级硬跑（这条留给下一阶段实现）。
+
+      ⚠ 为什么 NEARBY_WIFI_DEVICES 上**没有** neverForLocation：
+        neverForLocation 的语义是"我保证不拿 Wi-Fi 推导物理位置"。本应用恰恰要靠
+        SSID 判断校园网，且实测 SSID 必须要定位权限 —— 声明它既不符合事实、也拿不到值，
+        所以删掉了。代价是这两个权限要**同时**申请（见 AndroidWifiState.requiredPermissions）。
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
+        tools:targetApi="tiramisu" />
+
+    <!--
+      第四阶段：后台守护。
+
+      ⚠ 为什么用 specialUse 而不是 dataSync：
+        · 本服务的职责是"持续监听网络并偶尔做一次认证"，**不是**传数据。
+        · Android 15+ 给 dataSync 类型加了 6 小时/24 小时的运行时长上限，
+          用它等于承认"跑一会儿就该停"，与产品目标（长期守护）不符。
+        · specialUse 是官方给"不属于其它类型"的场景留的口子，代价是上架 Google Play
+          时要写用途说明 —— 这是产品取舍，不是技术顺手。
+        我们不用"绕限制"的办法（没有 WORKAROUND、没有前台服务套娃）。
+    -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+        tools:targetApi="34" />
+    <!-- Android 13+ 通知要用户授权；没授权服务照跑，只是通知不显示（不因此中断功能） -->
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33" />
+    <!-- 开机自启（产品目标："开机后无需手动操作"） -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CampusNet">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 设置页：校园 Wi-Fi 规则 / 账号密码 / 自动认证开关。不对外导出。 -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title" />
+
+        <!--
+          自动认证前台服务：承载网络监听 + Core 状态机的定时器。
+          业务逻辑不在这里（见 CampusAuthService 注释）。
+        -->
+        <service
+            android:name=".service.CampusAuthService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            tools:targetApi="34">
+            <property
+                android:name="android:PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="campus_wifi_authentication_monitor" />
+        </service>
+
+        <!-- 开机自启：只在"有凭据 + 打开了自动认证"时才拉起服务 -->
+        <receiver
+            android:name=".service.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

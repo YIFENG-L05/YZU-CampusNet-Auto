@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CampusNet</string>
+    <string name="shell_title">CampusNet</string>
+
+    <string name="notification_channel_name">校园网自动认证</string>
+    <string name="notification_channel_description">常驻通知：显示当前网络与认证状态。关掉服务即消失。</string>
+    <string name="notification_title">CampusNet</string>
+    <string name="notification_action_stop">停止</string>
+
+    <!-- 首页 -->
+    <string name="home_title">校园网自动认证</string>
+    <string name="home_switch_auto_auth">连上校园网自动认证</string>
+    <string name="home_btn_settings">设置（校园 Wi-Fi / 账号密码）</string>
+    <string name="home_btn_check">立即检查</string>
+    <string name="home_btn_auth">立即认证</string>
+    <string name="home_btn_stop">停止自动认证</string>
+    <string name="home_btn_permissions">申请 / 前往授权</string>
+    <string name="home_btn_selfcheck">运行边界自检（开发用）</string>
+    <string name="home_permission_title">权限</string>
+    <string name="home_credentials_ok">账号已配置</string>
+    <string name="home_credentials_missing">还没有配置账号和密码</string>
+
+    <!-- 设置页 -->
+    <string name="settings_title">设置</string>
+    <string name="settings_rule_title">校园 Wi-Fi 识别规则（选一种）</string>
+    <string name="settings_rule_exact">精确匹配（名称完全一致）</string>
+    <string name="settings_rule_prefix">前缀匹配（以它开头都算）</string>
+    <string name="settings_rule_regex">正则匹配（高级）</string>
+    <string name="settings_rule_value_hint">校园 Wi-Fi 名称</string>
+    <string name="settings_use_current_ssid">填入当前 Wi-Fi 名称</string>
+    <string name="settings_account_title">校园网账号</string>
+    <string name="settings_account_hint">学号 / 账号</string>
+    <string name="settings_password_title">密码</string>
+    <string name="settings_password_hint">留空表示不修改已保存的密码</string>
+    <string name="settings_btn_save">保存配置</string>
+    <string name="settings_service_title">服务 / 运营商（选填）</string>
+    <string name="settings_service_note">填门户列表里的服务名。留空 = 按账号运营商自动选。
+⚠ 实测提示：如果门户答复"用户不允许使用本服务"，就是这里选错了服务 —— 点下面的按钮读取本校园真实服务列表，按你的套餐选一个。</string>
+    <string name="settings_service_hint">例如：校内免费服务（留空表示自动）</string>
+    <string name="settings_fetch_services">读取门户服务列表（不发账号密码）</string>
+    <string name="settings_security_note">安全说明：密码只保存在 Android Keystore（AES/GCM）加密后的凭据存储里，
+不会写入普通配置、不会写进日志、也不会出现在界面上。只有真正发起认证的那一刻才会解密。</string>
+</resources>
