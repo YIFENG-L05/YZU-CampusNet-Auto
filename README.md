@@ -1,276 +1,293 @@
-# YZU校园网自动登录助手
+# CampusNet
 
-扬州大学校园网**自动登录 + 自动重连**助手。Windows 桌面应用，开机后自动完成校园网认证，日常后台驻留，断网自动恢复。
+CampusNet 是一个面向校园网络环境的**自动连接、认证与网络状态检测**工具，同时提供 **Windows 桌面端**与 **Android 移动端**。
 
-> **本项目为个人开发的校园网自动登录辅助工具，与扬州大学官方不存在隶属、授权或商业合作关系。**
-> 不是官方软件，不是官方客户端，未获学校授权。
+它在后台持续观察当前网络："要不要认证"由程序判断，需要时用你本机保存的账号完成一次认证；不需要时不碰网络、不抢占你正在使用的 Wi-Fi。
 
----
-
-## 功能
-
-- **校园网自动登录**：开机后无需手动打开浏览器、输入账号密码、选择运营商
-- **自动选择运营商**：按门户返回的服务列表自动匹配（联通 / 移动 / 电信 / 校内）
-- **开机自动连接**：登录 Windows 后自动在后台完成认证
-- **断网自动重连**：持续监测网络，掉线后自动重新认证（带退避与熔断，密码错误不会无限重试）
-- **系统托盘**：托盘图标实时反映状态，右键可立即连接 / 暂停 / 重新检测
-- **本地账号配置**：账号密码只存在本机，密码用 Windows DPAPI 加密
-- **一键卸载**：清理启动项、凭据、配置、日志
-- **日志脱敏**：账号、密码、令牌等敏感信息不会写入日志
+> **免责声明**：本项目为个人开发的校园网辅助工具，与扬州大学官方**不存在**隶属、授权或商业合作关系；
+> 不是官方软件、不是官方客户端，未获学校授权。请遵守所在学校的网络管理规定使用。
 
 ---
 
-## 下载
+## Features
 
-前往 [GitHub Releases](../../releases) 下载最新版本：
+只列当前代码里**真实实现**的能力（两端通用或分别标注）：
 
-```text
-YZU-CampusNet-Auto-Setup-1.0.0.exe
+- **自动连接 / 自动重连**：发现"需要认证"就自动登录；掉线后自动恢复（Windows、Android）
+- **网络状态检测**：区分"已联网 / 需要认证（被门户拦截）/ 无链路"，并给出可读原因（两端）
+- **认证状态检测**：当前阶段、最近一次认证结果与错误原因（两端）
+- **门户发现**：多探测点判定是否被门户劫持，并定位门户地址（两端）
+- **校园网识别**：按 SSID 规则（精确 / 前缀 / 正则）判断当前 Wi-Fi 是否属于校园网；认不出就不认证
+- **认证服务选择与绑定**：从门户服务列表里选择运营商服务（学校 / 联通 / 移动 / 电信）
+- **手动认证**：Windows 托盘「立即连接」与主界面按钮；Android 通过首页「自动连接」开关触发，**当前 Android 界面未单独提供"立即认证"按钮**
+- **后台运行**：Windows 托盘常驻 + 开机自启（`HKCU\...\Run`，不需要管理员权限）；Android 前台服务（`specialUse`）+ 开机自启
+- **网络切换处理**：Windows 监听网络签名变化；Android 使用 `NetworkCallback`
+- **日志**：两端都脱敏；Windows 按天落盘，Android 应用内保留最近 48 小时且不上传
+- **凭据安全存储**：Windows 用 Electron `safeStorage`（DPAPI）；Android 用 Keystore AES/GCM，磁盘上无明文密码
+- **自检**：Windows 有覆盖协议与脱敏的端到端测试；Android 内置 31 项自检（可通过 adb 触发）
+- **一键卸载**（Windows）：清理启动项、凭据、配置、日志
+
+## Supported Platforms
+
+| 平台 | 状态 | 说明 |
+|---|---|---|
+| **Windows 10 / 11（x64）** | 已实现，测试通过 | Electron 桌面应用，NSIS 安装包由 CI 构建 |
+| **Android 8.0+（API 26+）** | 已实现，真机验证 | 原生 Kotlin（XML View + Canvas），`minSdk 26` / `targetSdk 36` |
+
+两个平台共用同一份 **Core**（认证状态机与协议，见 [Architecture](#architecture)），
+平台差异只在"传输层与系统能力"上。
+
+## Authentication Compatibility
+
+这一节请**仔细读**，它决定你能不能直接用：
+
+**当前版本已完成并真实验证的是这一类链路：**
+
+```
+Ruijie ePortal（门户拦截 → 302/JS 跳转）
+  → CAS / 统一身份认证 SSO（sso.yzu.edu.cn 形态）
+  → 服务选择 / 服务绑定（operatorUserId / operatorPwd / flag=casauthofservicecheck）
+  → 回跳门户成功链 → 复探确认真的能上网
 ```
 
-## 安装
+- ✅ **已验证**：真实 `YZU-WLAN` 校园网链路（Windows 与 Android 均实测）
+- ✅ **已验证**：Ruijie ePortal 的门户发现、参数提取、`loginOfCas` 服务绑定
+- ✅ **已验证**：CAS SSO 的 ticket 流程（含 `croypto` 取 AES 密钥、密码加密提交、ticket 回跳）
+- ✅ **已验证**：服务选择/绑定（门户 `getServices` 列表 → 选中服务）
 
-1. 下载 `YZU-CampusNet-Auto-Setup-x.x.x.exe`
-2. 双击运行
-3. 选择安装位置（默认在用户目录下，**不需要管理员权限**）
-4. 完成
+**暂未适配或未验证：**
 
-> **系统要求**：Windows 10 / Windows 11（x64）
-> 无需安装 Node.js、npm，也无需使用命令行。
+- ❌ 未适配：Srun / 深澜
+- ❌ 未适配：Dr.COM
+- ❌ 未适配：其他校园网认证平台
+- ❌ 未验证：与当前 CAS SSO 流程不同的锐捷部署方式
+- ❌ 未验证：需要其他私有认证协议 / 客户端定制的校园网
 
-**关于安全提示**：本安装包未做代码签名，Windows SmartScreen 可能提示"Windows 已保护你的电脑"。如需继续，点「更多信息」→「仍要运行」。程序不写系统目录、不需要管理员权限、不修改系统设置。
+**重要提醒**：不同学校即使使用同一个厂商的产品，其认证页面结构、SSO 参数与加密方式、
+服务选择流程也可能完全不同。因此本工具**不保证**在其他学校可以直接使用。
 
----
+Windows 端另有"适配器（JSON 选择器）+ 登录兜底（隐藏浏览器驱动页面）"机制，
+理论上可通过新增适配器扩展；Android 端当前走的是已经验证的同一条协议实现。
 
-## 首次配置
-
-**第一次安装后需要完成一次配置**，之后即可自动运行：
-
-1. 安装完成后程序会自动打开主界面（也可从开始菜单或桌面快捷方式启动）
-2. 填写**校园网账号**与**密码**
-3. 选择**运营商**（不确定就选你实际办理的那家）
-4. 点「**测试连接**」确认能登录成功
-5. 勾选「**开机自动启动**」
-6. 关闭窗口即可 —— 程序会收起到系统托盘继续在后台运行
-
----
-
-## 使用
-
-### 自动登录
-
-程序在后台按固定间隔检测网络状态：
+## Architecture
 
 ```text
-已联网  → 每 45 秒轻量检测一次
-需认证  → 立即尝试登录
-无链路  → 等待链路恢复（网线/Wi-Fi）
+                     ┌──────────────────────────────┐
+                     │  src/core  （跨平台共享）      │
+                     │  · auto-connect  认证状态机    │
+                     │  · eportal-protocol  ePortal   │
+                     │  · yzu-sso-protocol  CAS SSO   │
+                     │  · src/shared  常量/HTTP/解析/脱敏│
+                     └───────┬──────────────┬───────┘
+                             │              │
+         Node 直接 require   │              │   QuickJS 执行（assets 同步同一份源码）
+                             ▼              ▼
+                   ┌──────────────┐   ┌──────────────────┐
+                   │ Windows 端    │   │ Android 端        │
+                   │ Electron 主进程│   │ 前台服务 + Kotlin │
+                   │ · net/ 探测   │   │ · AndroidNetworkMonitor│
+                   │ · login/ 适配器│  │ · AndroidHttpTransport│
+                   │ · DPAPI 凭据  │   │ · Keystore 凭据    │
+                   └──────────────┘   └──────────────────┘
 ```
 
-### 自动重连
+- **核心认证协议尽可能由共享 Core 处理**：状态机"什么时候该登录 / 退避多久 / 熔断"
+  与 ePortal、SSO 协议都在 `src/core` 与 `src/shared` 里，两端是**同一份源码**，不存在两份实现。
+- **平台各自提供 transport 与系统能力**：Windows 用 Node 的 HTTP + 隐藏浏览器兜底；
+  Android 用 OkHttp（绑定到目标 `Network`）+ QuickJS 运行 Core，并提供网络回调、前台服务、Keystore。
+- Android 构建时会把 `src/core`、`src/shared`、登录适配器**自动同步**到 `android/app/src/main/assets/core/`
+  （该目录是构建产物，不进版本库）。
 
-掉线后自动重新认证。连续失败会逐级退避（5s → 10s → 30s → 5 分钟 → 最长 30 分钟），
-**但账号或密码错误时会立刻停手并提示**，不会反复用错误密码去撞门户（避免触发学校风控或验证码）。
+## Repository Layout
 
-### 托盘
+```text
+├─ src/                    Windows / 跨平台源码
+│  ├─ core/                ★ 跨平台 Core：认证状态机 + ePortal / CAS SSO 协议
+│  ├─ shared/              常量、HTTP、HTML 解析、脱敏（两端共用）
+│  └─ main/                Electron 主进程、net/ 探测、login/ 适配器与登录、config/ 存储
+├─ android/                ★ Android 工程（独立 Gradle 工程，含 gradle wrapper）
+│  └─ app/src/main/java/com/campusnet/auto/
+│     ├─ core/             纯逻辑层（可 JVM 单测）
+│     ├─ platform/         Android 平台实现（网络、HTTP、Keystore、JS 桥）
+│     ├─ service/          前台服务与开机广播
+│     ├─ ui/               界面（首页 / 设置 / 二级页面）
+│     └─ selfcheck/        31 项设备自检
+├─ tools/                  开发与诊断工具（离线测试、探针、mock 门户、图标生成）
+├─ assets/                 桌面端图标
+├─ build/                  NSIS 安装脚本（打包需要，不要删）
+├─ docs/                   文档索引（见 docs/README.md）
+├─ .github/                CI（release.yml）与 Issue / PR 模板
+├─ README.md / CHANGELOG.md / LICENSE / TESTING.md
+└─ RELEASE_AUDIT.md        开源发布前的仓库与安全检查记录
+```
 
-| 图标 | 含义 |
+## Windows
+
+**环境**（本机已验证：Node.js 24.19 / npm 11.17）：
+
+```powershell
+node --version      # v24.19.0
+npm --version       # 11.17.0
+```
+
+**安装依赖并运行**：
+
+```powershell
+npm install         # 或 npm ci（严格按 package-lock.json）
+npm start           # 启动应用（等价于 electron .）
+npm run dev         # 同上
+```
+
+**测试**（全部离线，不接触真实校园网、不需要账号）：
+
+```powershell
+npm test              # = npm run test:windows：Core 测试 + 系统信息解析 + 卸载逻辑
+npm run test:core     # 只跑 Core / 协议 / 适配器 / 配置存储的纯逻辑测试
+npm run test:release  # 上面全部 + Electron 端到端（含脱敏 e2e 与冒烟）
+npm run regression    # tools/devtest/run-regression.ps1
+```
+
+**构建安装包**（electron-builder，NSIS）：
+
+```powershell
+npm run build         # → dist\CampusNet-Setup-1.0.1.exe
+npm run build:dir     # 只产出免安装目录 dist\win-unpacked
+```
+
+> 安装包**未做代码签名**，Windows SmartScreen 可能提示"已保护你的电脑"：
+> 点「更多信息」→「仍要运行」。程序不写系统目录、不需要管理员权限。
+
+**其他有用的脚本**（均来自 `package.json`）：
+
+```powershell
+npm run mock          # 启动本地 mock 门户（离线联调用）
+npm run probe         # 门户探针：看当前网络到底被什么拦着
+npm run find-portal   # 定位门户地址
+npm run smoke         # 冒烟：启动后截图到 .cache/ui-shots/main.png
+```
+
+**卸载**：主界面「卸载」，或 Windows 设置 → 应用 → CampusNet → 卸载，两者都会清理
+开机启动项、`%APPDATA%\CampusNet`（凭据、配置、日志、截图）。
+
+## Android
+
+**环境要求**（本机已验证的组合）：
+
+| 项 | 版本 |
 |---|---|
-| 绿色 | 已联网 |
-| 黄色 | 正在认证 / 需要认证 |
-| 灰色 | 无链路 |
-| 红色 | 需要人工处理（例如密码错误） |
+| JDK | Android Studio 自带 JBR（实测 OpenJDK 25.0.3）；Gradle/AGP 要求 JDK 17+ |
+| Gradle | 9.6.0（用仓库内 `gradlew`，无需自己装） |
+| Android Gradle Plugin | 9.4.1（`android/build.gradle.kts`） |
+| Kotlin | 2.4.10（`gradle.properties` 里 `android.builtInKotlin=false`） |
+| compileSdk / targetSdk | 36 |
+| minSdk | 26（Android 8.0） |
 
-右键菜单：立即连接 / 暂停自动连接 / 重新检测 / 显示窗口 / 开机启动 / 退出。
+**依赖**（`android/app/build.gradle.kts`，未引入任何 UI 框架 / 动画库）：
 
-### 开机启动
-
-使用当前用户范围的注册表项 `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`，
-**不需要管理员权限**，卸载时会自动清除。
-
----
-
-## 卸载
-
-两种方式任选：
-
-- **程序内**：主界面 →「卸载」，会清理启动项、凭据、配置、日志并删除程序
-- **Windows 官方**：设置 → 应用 → 已安装的应用 → YZU校园网自动登录助手 → 卸载
-
-两种方式都会清理：开机启动项、`%APPDATA%\CampusNetAuto`（含加密凭据、配置、日志、截图）。
-
----
-
-## 项目结构
-
-```text
-├─ assets/                 应用图标（icon.ico / icon.png）
-├─ build/                  NSIS 安装脚本（installer.nsh）
-├─ src/
-│  ├─ main/                主进程
-│  │  ├─ index.js          入口：窗口、托盘、生命周期
-│  │  ├─ login/            登录
-│  │  │  ├─ eportal-http.js  主路径：锐捷 ePortal 纯 HTTP 认证
-│  │  │  ├─ login-runner.js  兜底：隐藏浏览器驱动门户页面
-│  │  │  ├─ attempt.js       编排：定位门户 → 登录
-│  │  │  └─ adapters/        门户适配器配置
-│  │  ├─ net/              网络检测与门户发现
-│  │  ├─ auto-connect.js        自动重连状态机（退避 / 熔断）
-│  │  ├─ auto-connect-service.js 状态机装配与网络变化监听
-│  │  ├─ config/store.js   配置与凭据存储
-│  │  ├─ startup.js        开机启动（HKCU Run）
-│  │  ├─ tray.js           系统托盘
-│  │  ├─ uninstall.js      一键卸载
-│  │  └─ logger.js         日志与脱敏
-│  ├─ preload/             IPC 白名单桥
-│  ├─ renderer/            界面（原生 HTML/CSS/JS）
-│  └─ shared/              常量、脱敏、HTTP、HTML 解析
-├─ tools/                  开发与诊断工具、测试
-└─ .github/workflows/      CI：打 tag 自动构建并发布
+```
+androidx.core:core-ktx:1.10.1     androidx.appcompat:appcompat:1.7.0
+io.github.dokar3:quickjs-kt:1.0.15   com.squareup.okhttp3:okhttp:4.12.0
+junit:junit:4.13.2                （仅单元测试）
 ```
 
----
+**用 Android Studio**：直接 `Open` 仓库里的 `android/` 目录（**不是仓库根目录** ——
+根目录没有 Gradle 工程，这样 Node 与 Gradle 互不干扰）。
 
-## 安全说明
+**命令行构建**（PowerShell 示例）：
 
-**凭据存储**：密码**不写进任何明文配置文件**。使用 Electron `safeStorage`（Windows 上即
-**DPAPI**，由系统用当前用户的密钥加密）后存入 `credential.bin`；`config.json` 里只有运营商、
-适配器、开关等非敏感项。
+```powershell
+cd android
+$env:JAVA_HOME = "D:\Android Studio\jbr"     # 改成你自己的 JDK 路径
+$env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
 
-**日志脱敏**：`logger.js` + `redact.js` 会对敏感字段做替换（`<redacted:len=N>`），URL 会去掉
-查询串，账号只保留掩码后的形式。仓库里有一组端到端脱敏测试，用哨兵密码全盘扫描确认不泄漏。
-
-**网络行为**：程序只与校园门户（ePortal / 统一身份认证）通信，用于完成认证；不使用任何
-第三方服务器，不上传账号密码，不包含统计或遥测。
-
-**进程隔离**：渲染进程 `nodeIntegration: false` + `contextIsolation: true`，只通过 preload
-暴露的白名单 IPC 与主进程通信。
-
-**已知待加固项**：主窗口 `webPreferences.sandbox` 目前为 `false`（为兼容登录用的隐藏窗口
-方案）。这是后续版本的加固项，当前版本为保证登录稳定性暂不改动。
-
----
-
-## 隐私说明
-
-- 账号密码仅用于校园网认证，只保存在本机
-- 除完成校园网认证所必需的请求外，程序不发送任何数据
-- 不会上传到 GitHub 或任何服务器
-- 卸载时会删除本机保存的全部凭据与配置
-
----
-
-## 故障排查
-
-**日志在哪？**
-主界面 →「打开数据目录」，或直接打开 `%APPDATA%\CampusNetAuto\logs`，
-日志按天存放（`app-YYYY-MM-DD.log`）。
-
-**托盘变红（需要人工处理）**
-多半是账号或密码错误。程序会**停止自动重试**，请打开界面点「测试连接」确认。
-
-**改了密码怎么办？**
-打开界面重新填写并保存即可。
-
-**卸载后想彻底确认干净？**
-检查这三处：
-
-```text
-HKCU\Software\Microsoft\Windows\CurrentVersion\Run   不应存在 CampusNetAuto
-%APPDATA%\CampusNetAuto                              目录应已删除
-任务管理器                                            不应有 CampusNetAuto.exe 进程
+.\gradlew.bat test            # JVM 单元测试
+.\gradlew.bat assembleDebug   # → app\build\outputs\apk\debug\app-debug.apk
 ```
 
-**学校改版导致登录失败**
-本工具的登录有两条路径：优先走锐捷 ePortal 的认证接口，失败时退回"隐藏浏览器驱动门户页面"。
-若两条都失效，说明学校门户结构变了，需要更新适配器配置（见 `tools/README.md` 的诊断方法）。
+**安装到设备**：
 
----
-
-## 开发
-
-### 环境
-
-不需要额外环境，只要 Node.js 20+ 与 npm。
-
-```bash
-npm install
+```powershell
+$adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"
+& $adb install -r android\app\build\outputs\apk\debug\app-debug.apk
+# 某些 OEM ROM（如 vivo）会把 adb install 拦在安装确认页；可改用：
+& $adb push android\app\build\outputs\apk\debug\app-debug.apk /data/local/tmp/cna.apk
+& $adb shell pm install -r /data/local/tmp/cna.apk
 ```
 
-> 注：`.npmrc` 里配置了国内镜像（npm / Electron 二进制），这是为了让国内网络下安装稳定。
-> 如果在海外或 CI 环境，可用环境变量覆盖为官方源。
+**设备自检**（31 项，覆盖协议、网络、权限、脱敏；界面里没有入口，用 adb 触发）：
 
-### 本地运行
-
-```bash
-npm run dev            # 前台启动（可见窗口与日志）
-npm run start:hidden   # 隐藏窗口启动，模拟开机时的行为
+```powershell
+& $adb shell am start -n com.campusnet.auto/.MainActivity --ez runSelfCheck true
+& $adb logcat -s CampusNet      # 自检逐项结果
 ```
 
-### 测试
+> ⚠ **签名说明**：当前仓库**没有 release 签名配置**，`assembleDebug` 产物是
+> **debug 签名**的测试包（不能用于正式分发）。需要正式包请自行配置 `signingConfigs`。
 
-```bash
-npm test
-```
+## Configuration
 
-Node 层测试**全部离线**（不访问真实校园网、不需要 Electron），可随时运行。
+- **账号与密码由用户在本机配置**，程序只保存到本机安全存储，界面上密码永不回显。
+- Windows：主界面/设置里填写账号、密码、运营商；也可用 `npm run seed:demo` 生成演示配置（仅开发用）。
+- Android：设置 → 账号与认证（账号 / 密码 / 认证服务四选一 / 校园 Wi-Fi 规则）。
+- **请勿把真实账号、密码、Cookie、Ticket、Token 提交到任何地方**（包括 Issue、PR、截图、日志）。
 
-### 本地构建
+## Security / Privacy
 
-```bash
-npm run build          # 生成 Windows 安装包 → dist/
-npm run build:dir      # 只生成免安装目录（调试用，快很多）
-```
+- **凭据存储**：Windows 用 Electron `safeStorage`（Windows 上即 DPAPI）加密后写入 `credential.bin`；
+  Android 用 Android Keystore + AES/GCM，磁盘上只有密文，没有明文密码。
+- **日志脱敏**：两端共用 `src/shared/redact.js` 的脱敏规则，账号只留掩码、URL 去掉查询串、
+  密码 / 票据 / Cookie 不落日志；仓库里有端到端脱敏测试（用哨兵密码全盘扫描）。
+- **不上传**：没有自建服务器、没有统计 / 广告 / 崩溃上报；网络请求只有两类——
+  校园门户与统一身份认证（完成认证必需）、连通性探测（判断"是否真的能上网"）。
+- **权限（Android）**：只在需要时申请，且逐条对应功能——附近的 Wi-Fi 设备与位置信息（读取 Wi-Fi 名称，
+  不使用定位做任何事）、通知（前台服务状态）、网络相关普通权限、前台服务、开机自启；
+  不申请通讯录、短信、相机、麦克风、存储、无障碍等权限。详见应用内「隐私声明 → 权限声明」。
+- **本地数据**：Windows 数据目录 `%APPDATA%\CampusNet`；Android 日志只保留最近 48 小时且不联网上传。
 
-产物：
+## Limitations
 
-```text
-dist/YZU-CampusNet-Auto-Setup-1.0.0.exe
-```
+诚实列出当前版本已知的限制：
 
-### 重新生成图标
+1. **学校差异**：校园网认证方案差异很大，当前只验证了 Ruijie ePortal + CAS SSO 这一类链路；
+   其他平台（Srun / 深澜、Dr.COM 等）**暂未适配**，不保证可用。
+2. **认证页面会变**：学校调整门户/SSO 页面后可能失效，需要重新抓取并更新协议实现。
+3. **Android 后台策略**：各 OEM（vivo / 小米 / 华为等）对后台与自启动的限制不同，
+   未加入白名单时可能被杀；应用内「运行准备度」会列出可见项，但**某些开关系统没有公开查询接口**，
+   只能由用户自行确认。
+4. **Android 没有正式签名**：仓库只提供 debug 签名的测试 APK。
+5. **Windows 安装包未签名**：会出现 SmartScreen 提示。
+6. **Windows 主窗口 `sandbox: false`**：为兼容隐藏浏览器登录方案暂时保留，是后续加固项。
+7. **Android 界面没有"立即认证"按钮**：手动触发目前只能通过首页「自动连接」开关；网络变化会自动触发。
+8. **不绕过任何限制**：验证码、账号被限制、门户故障等情况不会被绕过，程序会如实报失败并按退避重试或停手。
+9. **未做多账号 / 多网卡并发处理**：同一时间只按当前活动网络判断与认证。
 
-```bash
-npm run icon
-```
+## Roadmap
 
-### 诊断工具
+（只写方向，不承诺版本）
 
-见 [`tools/README.md`](tools/README.md)。常用：
+- 适配更多校园网认证平台（Srun / 深澜、Dr.COM 等）与更多学校
+- 把"适配器配置"做得更容易贡献（配置模板 + 抓取向导）
+- Android 正式签名与发布流程完善
+- 更完善的诊断导出（脱敏后）方便用户反馈问题
+- 社区贡献的适配反馈汇总
 
-```bash
-npm run find-portal    # 定位当前网络的门户地址
-npm run cas-probe      # 判断统一身份认证是"传统表单"还是"SPA"
-npm run mock           # 本地模拟门户，离线验证登录流程
-```
+## Contributing
 
----
+欢迎 Issue、Pull Request、校园网认证适配反馈与 Bug Report。
 
-## GitHub Release
+**提交 Issue 前请确认**：不要上传账号、密码、Cookie、Ticket、Token 或任何个人隐私信息；
+日志请先脱敏（应用内日志本身已脱敏，Windows 日志在 `%APPDATA%\CampusNet\logs`）。
 
-项目使用 GitHub Actions 自动构建与发布：
+仓库内置模板：[Bug Report](.github/ISSUE_TEMPLATE/bug_report.md) ·
+[Feature Request](.github/ISSUE_TEMPLATE/feature_request.md) ·
+[Pull Request](.github/pull_request_template.md)。
 
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-推送 tag 后，`.github/workflows/release.yml` 会在 Windows Runner 上执行
-`npm ci → npm test → npm run build`，并把生成的安装包附加到对应的 GitHub Release。
-
-> 构建过程**不需要任何校园网账号或密钥**，全部使用公开代码与依赖完成。
-
----
-
-## 免责声明
-
-- 本项目为个人学习与自用工具，**与扬州大学官方无任何隶属、授权或合作关系**
-- 使用者需自行确保使用行为符合学校的网络使用规定
-- 因使用本工具产生的任何后果（包括但不限于账号异常、网络中断）由使用者自行承担
-- 请勿将本工具用于任何未经授权的用途
-
----
+开发前建议先看：`TESTING.md`（测试分层）、`docs/README.md`（文档索引）、
+`android/BOUNDARY.md` 与 `android/CORE_BOUNDARY.md`（Android 边界与 Core 契约）。
 
 ## License
 
-[MIT](LICENSE)
+[MIT License](LICENSE) © 2026 FENG-L
+
+使用本项目即表示你已阅读并同意：本工具按"现状"提供，因学校网络策略调整、系统权限限制
+或厂商 ROM 行为导致的认证失败，本项目不承担由此产生的后果。

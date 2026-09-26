@@ -36,12 +36,47 @@ config.json
 
 # ── 日志与临时文件 ──
 *.log
+*.log.*
 *.tmp
 *.bak
+*.orig
+*.rej
 Thumbs.db
 .DS_Store
+
+# ── Android / Gradle ──
+# android/ 是独立的 Gradle 工程（边界见 android/BOUNDARY.md）。
+# 它不会进 Windows 安装包：package.json 的 build.files 只收 src/** 与 package.json。
+android/.gradle/
+android/.kotlin/
+android/.cxx/
+android/build/
+android/app/build/
+android/local.properties
+# 构建期从仓库 src/ 同步过来的 JS 副本（源只有一份，在 src/ 里）
+android/app/src/main/assets/core/
+# Gradle wrapper **必须提交**（别人要靠它构建），所以这里不忽略 gradle/wrapper/
+*.apk
+*.aab
+captures/
+logs/
+
+# ── Gradle / JVM（根目录兜底）──
+.gradle/
+build/tmp/
+local.properties
+*.hprof
 
 # ── 编辑器 ──
 .vscode/
 .idea/
+*.iml
 *.swp
+*~
+
+# ── 内部过程笔记（只在本地，不进公开仓库）──
+# 这两份是发布/交接过程中的工作稿（逐条过程流水与内部交接说明），
+# 不属于对外文档；面向用户与开发者的说明在 README.md / docs/ / android/*.md 里。
+RELEASE_CHECKPOINT.md
+android/UI_HANDOFF.md
+
